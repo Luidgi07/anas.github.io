@@ -1139,7 +1139,9 @@ const modalCloseBtnEl = document.getElementById('modalCloseBtn');
 function showModal() {
   infoModalOverlayEl?.classList.add('visible');
 }
+
 function hideModal() {
+  // fecha o pop-up mas DEIXA o botão visível
   infoModalOverlayEl?.classList.remove('visible');
   infoToggleBtnEl?.classList.remove('hidden');
 }
@@ -1150,7 +1152,6 @@ infoToggleBtnEl?.addEventListener('click', showModal);
 function startWhiteFadeSequence() {
   if (!whiteOverlayEl || !introWrapper) return;
 
-  // faz o flash branco e esconde o vídeo
   whiteOverlayEl.classList.add('visible');
   introWrapper.style.opacity = '0';
   introWrapper.style.transition = 'opacity 0.6s ease';
@@ -1163,8 +1164,8 @@ function startWhiteFadeSequence() {
     whiteOverlayEl.classList.add('fade-out');
     setTimeout(() => {
       whiteOverlayEl.style.display = 'none';
-      showModal();
-      infoToggleBtnEl?.classList.add('hidden');
+      showModal();                // abre o pop-up 1ª vez
+      infoToggleBtnEl?.classList.add('hidden'); // botão escondido ENQUANTO o pop-up está aberto
     }, 1900);
   }, 200);
 }
@@ -1173,12 +1174,12 @@ function startWhiteFadeSequence() {
 if (skipIntro) {
   if (introWrapper) introWrapper.style.display = 'none';
   if (whiteOverlayEl) whiteOverlayEl.style.display = 'none';
-  // não chamamos startWhiteFadeSequence nem showModal
+  // mostra só o botão Resumo / Índice
+  infoToggleBtnEl?.classList.remove('hidden');
 } else {
-  // fluxo normal: vídeo toca e ao terminar aparece o modal
+  // fluxo normal na primeira visita
   introVideo?.addEventListener('ended', startWhiteFadeSequence);
 
-  // fallback: se o vídeo não terminar (erro, user bloqueia, etc.), força a sequência ao fim de 15s
   setTimeout(() => {
     if (introWrapper && introWrapper.style.display !== 'none') {
       startWhiteFadeSequence();
