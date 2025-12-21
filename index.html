@@ -135,7 +135,7 @@ body {
   box-shadow: 0 6px 16px rgba(0,0,0,0.7);
 }
 #infoToggleBtn { top: 90px; }
-#biblioToggleBtn { top: 150px; } /* ~0,5 cm abaixo */
+#biblioToggleBtn { top: 150px; }
 #infoToggleBtn span.icon,
 #biblioToggleBtn span.icon {
   width: 8px;
@@ -194,7 +194,7 @@ body {
   font-size: 0.88em;
 }
 
-/* ===== TOP HUD (sem ícones extra) ===== */
+/* ===== TOP HUD ===== */
 .top-hud {
   position: fixed;
   top: 0; left: 0;
@@ -480,7 +480,7 @@ body.gradient-fade::after { opacity: 1; }
   transform: translateY(0);
 }
 
-/* 4 colunas: imagem – texto – mini cards – vídeo */
+/* layout hubs (4 colunas, última vazia) */
 .game-details-inner {
   width: 100%;
   max-width: 1500px;
@@ -559,20 +559,6 @@ body.gradient-fade::after { opacity: 1; }
   color: #dfe8ff;
 }
 
-/* coluna vídeo */
-.video-slot {
-  border-radius: 18px;
-  border: 2px solid #42aaff;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-  max-height: 245px;
-}
-.video-slot video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 /* ===== UX HINT ===== */
 .hub-hint {
   position: fixed;
@@ -622,7 +608,6 @@ body.gradient-fade::after { opacity: 1; }
   .ps4-dashboard { padding-left: 20px; }
   .carousel-inner { gap: 22px; }
   .game-details-inner { grid-template-columns: 1fr; }
-  .video-slot { margin-top: 12px; height: 180px; }
 }
 
 /* ===== LOADING HUD ===== */
@@ -824,7 +809,7 @@ body.gradient-fade::after { opacity: 1; }
   </div>
 </div>
 
-<!-- HUB AUTOBIOGRAFIA (1) -->
+<!-- HUBS (sem vídeos, última coluna vazia) -->
 <div class="game-details" id="gameDetails-1">
   <button class="scroll-top-btn" onclick="scrollToCarousel()">
     <svg viewBox="0 0 48 48" fill="none">
@@ -857,20 +842,10 @@ body.gradient-fade::after { opacity: 1; }
         <div class="text"><strong>Salvamento aquático</strong><br>Competições e provas técnicas.</div>
       </div>
     </div>
-    <div class="video-slot">
-      <video
-        src="Cópia de Sesimbra (2).mp4"
-        autoplay
-        muted
-        loop
-        playsinline
-        controls>
-      </video>
-    </div>
+    <div></div>
   </div>
 </div>
 
-<!-- HUB EDUCAÇÃO (2) -->
 <div class="game-details" id="gameDetails-2">
   <button class="scroll-top-btn" onclick="scrollToCarousel()">
     <svg viewBox="0 0 48 48" fill="none">
@@ -899,20 +874,10 @@ body.gradient-fade::after { opacity: 1; }
         <div class="text"><strong>Unidades Curriculares Isoladas</strong><br>Engenharia Biomédica.</div>
       </div>
     </div>
-    <div class="video-slot">
-      <video
-        src="Cópia de Sesimbra (5).mp4"
-        autoplay
-        muted
-        loop
-        playsinline
-        controls>
-      </video>
-    </div>
+    <div></div>
   </div>
 </div>
 
-<!-- HUB FORMAÇÕES (3) -->
 <div class="game-details" id="gameDetails-3">
   <button class="scroll-top-btn" onclick="scrollToCarousel()">
     <svg viewBox="0 0 48 48" fill="none">
@@ -941,20 +906,10 @@ body.gradient-fade::after { opacity: 1; }
         <div class="text"><strong>Surf & Rescue</strong><br>Formação de salvamentos com auxílio de prancha.</div>
       </div>
     </div>
-    <div class="video-slot">
-      <video
-        src="Cópia de Sesimbra (7).mp4"
-        autoplay
-        muted
-        loop
-        playsinline
-        controls>
-      </video>
-    </div>
+    <div></div>
   </div>
 </div>
 
-<!-- HUB EXPERIÊNCIAS (4) -->
 <div class="game-details" id="gameDetails-4">
   <button class="scroll-top-btn" onclick="scrollToCarousel()">
     <svg viewBox="0 0 48 48" fill="none">
@@ -979,11 +934,7 @@ body.gradient-fade::after { opacity: 1; }
         <div class="text"><strong>Estágios</strong><br>Contextos clínicos e I&D.</div>
       </div>
     </div>
-    <div class="video-slot">
-      <div style="width:100%;height:100%;background:rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.9em;">
-        Vídeo sobre experiências
-      </div>
-    </div>
+    <div></div>
   </div>
 </div>
 
@@ -1148,7 +1099,7 @@ function genericHudLoading(button, url) {
   }, frameDuration);
 }
 
-/* START buttons para novas páginas */
+/* START buttons */
 document.getElementById('hud-start-documentacao')?.addEventListener('click', e => {
   e.preventDefault();
   genericHudLoading(e.currentTarget, 'documentacao.html');
