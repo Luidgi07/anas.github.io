@@ -135,7 +135,7 @@ body {
   box-shadow: 0 6px 16px rgba(0,0,0,0.7);
 }
 #infoToggleBtn { top: 90px; }
-#biblioToggleBtn { top: 130px; } /* logo por baixo */
+#biblioToggleBtn { top: 150px; } /* ~0,5 cm abaixo */
 #infoToggleBtn span.icon,
 #biblioToggleBtn span.icon {
   width: 8px;
@@ -194,7 +194,7 @@ body {
   font-size: 0.88em;
 }
 
-/* ===== TOP HUD (SEM ÍCONES) ===== */
+/* ===== TOP HUD (sem ícones extra) ===== */
 .top-hud {
   position: fixed;
   top: 0; left: 0;
@@ -403,7 +403,7 @@ body.gradient-fade::after { opacity: 1; }
   50%     { transform: translateY(5px); }
 }
 
-/* CD animação */
+/* ===== CD ANIMADO ===== */
 .cd-label-wrap {
   display: inline-flex;
   align-items: center;
@@ -458,7 +458,7 @@ body.gradient-fade::after { opacity: 1; }
   stroke: #1da1f2;
 }
 
-/* ===== HUB EM BAIXO (GENÉRICO) ===== */
+/* ===== HUB EM BAIXO ===== */
 .game-details {
   position: fixed;
   left: 0; bottom: 0;
@@ -480,12 +480,12 @@ body.gradient-fade::after { opacity: 1; }
   transform: translateY(0);
 }
 
-/* layout conteúdo hub */
+/* 4 colunas: imagem – texto – mini cards – vídeo */
 .game-details-inner {
   width: 100%;
   max-width: 1500px;
   display: grid;
-  grid-template-columns: 340px 1.2fr 220px;
+  grid-template-columns: 340px 1.2fr 220px 360px;
   gap: 26px;
   align-items: start;
 }
@@ -559,6 +559,20 @@ body.gradient-fade::after { opacity: 1; }
   color: #dfe8ff;
 }
 
+/* coluna vídeo */
+.video-slot {
+  border-radius: 18px;
+  border: 2px solid #42aaff;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+  max-height: 245px;
+}
+.video-slot video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* ===== UX HINT ===== */
 .hub-hint {
   position: fixed;
@@ -608,6 +622,7 @@ body.gradient-fade::after { opacity: 1; }
   .ps4-dashboard { padding-left: 20px; }
   .carousel-inner { gap: 22px; }
   .game-details-inner { grid-template-columns: 1fr; }
+  .video-slot { margin-top: 12px; height: 180px; }
 }
 
 /* ===== LOADING HUD ===== */
@@ -641,7 +656,6 @@ body.gradient-fade::after { opacity: 1; }
 <div id="introVideoWrapper">
   <video id="introVideo" src="video (2).mp4" autoplay muted playsinline></video>
 </div>
-
 <div id="whiteOverlay" class="visible"></div>
 
 <!-- MODAL RESUMO / ÍNDICE -->
@@ -675,12 +689,11 @@ body.gradient-fade::after { opacity: 1; }
   </div>
 </div>
 
-<!-- BOTÕES LATERAIS TOPO ESQ -->
+<!-- BOTÕES LATERAIS -->
 <button id="infoToggleBtn" class="hidden">
   <span class="icon"></span>
   <span>Resumo / Índice</span>
 </button>
-
 <button id="biblioToggleBtn">
   <span class="icon"></span>
   <span>Bibliografia</span>
@@ -700,7 +713,7 @@ body.gradient-fade::after { opacity: 1; }
   <div class="hud-right"></div>
 </div>
 
-<!-- DASHBOARD -->
+<!-- DASHBOARD 6 CARTÕES -->
 <div class="dashboard-container" id="dashCont">
   <div class="ps4-dashboard">
     <div class="carousel-inner" id="carousel">
@@ -727,7 +740,13 @@ body.gradient-fade::after { opacity: 1; }
           <div class="hud-start">
             <button class="hud-btn" id="hud-start-autobiografia">START</button>
           </div>
-          <div class="hud-title">Autobiografia</div>
+          <div class="hud-title">
+            <span class="cd-label-wrap">
+              <span class="cd-small"></span>
+              <span>Autobiografia</span>
+            </span>
+            <span class="down-arrow">▼</span>
+          </div>
         </div>
       </div>
 
@@ -740,7 +759,13 @@ body.gradient-fade::after { opacity: 1; }
           <div class="hud-start">
             <button class="hud-btn" id="hud-start-ufcd">START</button>
           </div>
-          <div class="hud-title">UFCD</div>
+          <div class="hud-title">
+            <span class="cd-label-wrap">
+              <span class="cd-small"></span>
+              <span>UFCD</span>
+            </span>
+            <span class="down-arrow">▼</span>
+          </div>
         </div>
       </div>
 
@@ -753,7 +778,13 @@ body.gradient-fade::after { opacity: 1; }
           <div class="hud-start">
             <button class="hud-btn" id="hud-start-estagio">START</button>
           </div>
-          <div class="hud-title">Estágio</div>
+          <div class="hud-title">
+            <span class="cd-label-wrap">
+              <span class="cd-small"></span>
+              <span>Estágio</span>
+            </span>
+            <span class="down-arrow">▼</span>
+          </div>
         </div>
       </div>
 
@@ -766,7 +797,13 @@ body.gradient-fade::after { opacity: 1; }
           <div class="hud-start">
             <button class="hud-btn" id="hud-start-ultima">START</button>
           </div>
-          <div class="hud-title">Última Reflexão</div>
+          <div class="hud-title">
+            <span class="cd-label-wrap">
+              <span class="cd-small"></span>
+              <span>Última Reflexão</span>
+            </span>
+            <span class="down-arrow">▼</span>
+          </div>
         </div>
       </div>
 
@@ -787,11 +824,168 @@ body.gradient-fade::after { opacity: 1; }
   </div>
 </div>
 
-<!-- Hubs vazios para manter lógica (podem ser preenchidos depois) -->
-<div class="game-details" id="gameDetails-1"></div>
-<div class="game-details" id="gameDetails-2"></div>
-<div class="game-details" id="gameDetails-3"></div>
-<div class="game-details" id="gameDetails-4"></div>
+<!-- HUB AUTOBIOGRAFIA (1) -->
+<div class="game-details" id="gameDetails-1">
+  <button class="scroll-top-btn" onclick="scrollToCarousel()">
+    <svg viewBox="0 0 48 48" fill="none">
+      <polyline points="16,28 24,20 32,28" stroke="#1da1f2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="16,36 24,28 32,36" stroke="#1da1f2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div class="game-details-inner">
+    <img class="cover-main" src="ChatGPT Image 2_08_2025, 19_35_09.png" alt="Desporto">
+    <div class="info">
+      <h1>DESPORTO</h1>
+      <p class="tagline">Natação pura, águas abertas e salvamento aquático desportivo.</p>
+      <p><strong>Desporto:</strong> Praticante regular de natação pura, águas abertas e salvamento aquático desportivo, atividades que promovem o desenvolvimento global da condição física, reforço muscular, resistência cardiovascular e respiratória, melhora da flexibilidade, postura e coordenação motora.</p>
+      <div class="buttons">
+        <button>Ver Troféus</button>
+        <button id="hud-desporto-start-detail">START</button>
+      </div>
+    </div>
+    <div class="side-column">
+      <div class="side-card">
+        <img src="icon_aa.png" alt="Águas abertas">
+        <div class="text"><strong>Águas abertas</strong><br>Provas 1.5 km a 10 km.</div>
+      </div>
+      <div class="side-card">
+        <img src="icon_np.png" alt="Piscina">
+        <div class="text"><strong>Piscina</strong><br>Velocidade & Fundo.</div>
+      </div>
+      <div class="side-card">
+        <img src="Imagem_WhatsApp_2025-10-26_às_00.09.13_5fb53800-removebg-preview.png" alt="Salvamento">
+        <div class="text"><strong>Salvamento aquático</strong><br>Competições e provas técnicas.</div>
+      </div>
+    </div>
+    <div class="video-slot">
+      <video
+        src="Cópia de Sesimbra (2).mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        controls>
+      </video>
+    </div>
+  </div>
+</div>
+
+<!-- HUB EDUCAÇÃO (2) -->
+<div class="game-details" id="gameDetails-2">
+  <button class="scroll-top-btn" onclick="scrollToCarousel()">
+    <svg viewBox="0 0 48 48" fill="none">
+      <polyline points="16,28 24,20 32,28" stroke="#1da1f2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="16,36 24,28 32,36" stroke="#1da1f2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div class="game-details-inner">
+    <img class="cover-main" src="ChatGPT Image 2_08_2025, 20_24_46.png" alt="Educação">
+    <div class="info">
+      <h1>EDUCAÇÃO</h1>
+      <p class="tagline">Percurso académico em tecnologia e saúde.</p>
+      <p><strong>Educação</strong>: Percorri várias etapas académicas desafiantes, incluindo o curso de Ciências e Tecnologias no ensino secundário e a licenciatura em Tecnologia Biomédica. Estou empenhado em aprofundar continuamente os meus conhecimentos e tenciono prosseguir os meus estudos muito além da licenciatura, reforçando o meu compromisso com a aprendizagem ao longo da vida e o desenvolvimento profissional. Para ver mais informação sobre os meus estudos, carregue em START.</p>
+      <div class="buttons">
+        <button>Ver Troféus</button>
+        <button id="hud-educacao-start-detail">START</button>
+      </div>
+    </div>
+    <div class="side-column">
+      <div class="side-card">
+        <img src="TecnologiaSetubal_Principal_PolicromiaPositivo_PT-1.png" alt="Tecnologia Biomédica">
+        <div class="text"><strong>Tecnologia Biomédica</strong><br>Licenciatura.</div>
+      </div>
+      <div class="side-card">
+        <img src="ISEL.png" alt="Secundário">
+        <div class="text"><strong>Unidades Curriculares Isoladas</strong><br>Engenharia Biomédica.</div>
+      </div>
+    </div>
+    <div class="video-slot">
+      <video
+        src="Cópia de Sesimbra (5).mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        controls>
+      </video>
+    </div>
+  </div>
+</div>
+
+<!-- HUB FORMAÇÕES (3) -->
+<div class="game-details" id="gameDetails-3">
+  <button class="scroll-top-btn" onclick="scrollToCarousel()">
+    <svg viewBox="0 0 48 48" fill="none">
+      <polyline points="16,28 24,20 32,28" stroke="#1da1f2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="16,36 24,28 32,36" stroke="#1da1f2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div class="game-details-inner">
+    <img class="cover-main" src="ChatGPT Image 2_08_2025, 21_42_43.png" alt="Formações">
+    <div class="info">
+      <h1>FORMAÇÕES</h1>
+      <p class="tagline">Cursos complementares em tecnologia e saúde.</p>
+      <p><strong>Formações</strong>: Ao longo do meu percurso participei em várias formações e cursos complementares, contribuindo significativamente para a expansão dos meus conhecimentos práticos e teóricos. Estes cursos permitiram-me adquirir novas competências técnicas e desenvolver uma visão mais abrangente e multidisciplinar sobre temas relevantes para a minha área de interesse. Para ver mais informação sobre as minhas formações e cursos, carregue em START.</p>
+      <div class="buttons">
+        <button>Ver Troféus</button>
+        <button id="hud-formacoes-start-detail">START</button>
+      </div>
+    </div>
+    <div class="side-column">
+      <div class="side-card">
+        <img src="image (4).png" alt="Carta de navegação">
+        <div class="text"><strong>Carta de navegação de recreio</strong><br>Carta de Patão Local.</div>
+      </div>
+      <div class="side-card">
+        <img src="image (2).png" alt="Surf & Rescue">
+        <div class="text"><strong>Surf & Rescue</strong><br>Formação de salvamentos com auxílio de prancha.</div>
+      </div>
+    </div>
+    <div class="video-slot">
+      <video
+        src="Cópia de Sesimbra (7).mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        controls>
+      </video>
+    </div>
+  </div>
+</div>
+
+<!-- HUB EXPERIÊNCIAS (4) -->
+<div class="game-details" id="gameDetails-4">
+  <button class="scroll-top-btn" onclick="scrollToCarousel()">
+    <svg viewBox="0 0 48 48" fill="none">
+      <polyline points="16,28 24,20 32,28" stroke="#1da1f2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="16,36 24,28 32,36" stroke="#1da1f2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div class="game-details-inner">
+    <img class="cover-main" src="ChatGPT Image 2_08_2025, 21_47_32.png" alt="Experiências">
+    <div class="info">
+      <h1>EXPERIÊNCIAS</h1>
+      <p class="tagline">Estágios e projetos em contexto real.</p>
+      <p><strong>Experiências</strong>: Integrei diferentes contextos de trabalho e estágios, onde aprofundei conhecimentos técnicos e desenvolvi competências essenciais como trabalho em equipa multidisciplinar, comunicação e gestão de desafios reais. Para ver mais informação sobre as minhas experiências profissionais e estágios, carregue em START.</p>
+      <div class="buttons">
+        <button>Ver Troféus</button>
+        <button id="hud-experiencias-start-detail">START</button>
+      </div>
+    </div>
+    <div class="side-column">
+      <div class="side-card">
+        <img src="thumb_estagios.png" alt="Estágios">
+        <div class="text"><strong>Estágios</strong><br>Contextos clínicos e I&D.</div>
+      </div>
+    </div>
+    <div class="video-slot">
+      <div style="width:100%;height:100%;background:rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.9em;">
+        Vídeo sobre experiências
+      </div>
+    </div>
+  </div>
+</div>
 
 <div id="hubHint" class="hub-hint">
   <span>Carrega</span>
@@ -954,7 +1148,7 @@ function genericHudLoading(button, url) {
   }, frameDuration);
 }
 
-/* START buttons */
+/* START buttons para novas páginas */
 document.getElementById('hud-start-documentacao')?.addEventListener('click', e => {
   e.preventDefault();
   genericHudLoading(e.currentTarget, 'documentacao.html');
@@ -983,30 +1177,30 @@ document.getElementById('hud-start-certificados')?.addEventListener('click', e =
 /* VÍDEO INTRO + FADE + MODAL RESUMO */
 const introVideo = document.getElementById('introVideo');
 const introWrapper = document.getElementById('introVideoWrapper');
-const whiteOverlay = document.getElementById('whiteOverlay');
-const infoModalOverlay = document.getElementById('infoModalOverlay');
-const infoToggleBtn = document.getElementById('infoToggleBtn');
-const modalCloseBtn = document.getElementById('modalCloseBtn');
+const whiteOverlayEl = document.getElementById('whiteOverlay');
+const infoModalOverlayEl = document.getElementById('infoModalOverlay');
+const infoToggleBtnEl = document.getElementById('infoToggleBtn');
+const modalCloseBtnEl = document.getElementById('modalCloseBtn');
 
-function showModal() { infoModalOverlay.classList.add('visible'); }
+function showModal() { infoModalOverlayEl.classList.add('visible'); }
 function hideModal() {
-  infoModalOverlay.classList.remove('visible');
-  infoToggleBtn.classList.remove('hidden');
+  infoModalOverlayEl.classList.remove('visible');
+  infoToggleBtnEl.classList.remove('hidden');
 }
-modalCloseBtn.addEventListener('click', hideModal);
-infoToggleBtn.addEventListener('click', showModal);
+modalCloseBtnEl.addEventListener('click', hideModal);
+infoToggleBtnEl.addEventListener('click', showModal);
 
 function startWhiteFadeSequence() {
-  whiteOverlay.classList.add('visible');
+  whiteOverlayEl.classList.add('visible');
   introWrapper.style.opacity = '0';
   introWrapper.style.transition = 'opacity 0.6s ease';
   setTimeout(() => { introWrapper.style.display = 'none'; }, 600);
   setTimeout(() => {
-    whiteOverlay.classList.add('fade-out');
+    whiteOverlayEl.classList.add('fade-out');
     setTimeout(() => {
-      whiteOverlay.style.display = 'none';
+      whiteOverlayEl.style.display = 'none';
       showModal();
-      infoToggleBtn.classList.add('hidden');
+      infoToggleBtnEl.classList.add('hidden');
     }, 1900);
   }, 200);
 }
@@ -1018,13 +1212,13 @@ setTimeout(() => {
 }, 15000);
 
 /* MODAL BIBLIOGRAFIA */
-const biblioModalOverlay = document.getElementById('biblioModalOverlay');
-const biblioToggleBtn = document.getElementById('biblioToggleBtn');
-const biblioCloseBtn = document.getElementById('biblioCloseBtn');
-function showBiblioModal() { biblioModalOverlay.classList.add('visible'); }
-function hideBiblioModal() { biblioModalOverlay.classList.remove('visible'); }
-biblioToggleBtn.addEventListener('click', showBiblioModal);
-biblioCloseBtn.addEventListener('click', hideBiblioModal);
+const biblioModalOverlayEl = document.getElementById('biblioModalOverlay');
+const biblioToggleBtnEl = document.getElementById('biblioToggleBtn');
+const biblioCloseBtnEl = document.getElementById('biblioCloseBtn');
+function showBiblioModal() { biblioModalOverlayEl.classList.add('visible'); }
+function hideBiblioModal() { biblioModalOverlayEl.classList.remove('visible'); }
+biblioToggleBtnEl.addEventListener('click', showBiblioModal);
+biblioCloseBtnEl.addEventListener('click', hideBiblioModal);
 </script>
 </body>
 </html>
