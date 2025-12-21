@@ -65,29 +65,23 @@
       padding:8px 16px;border-radius:6px;
       border:1px solid rgba(66,170,255,0.3);
       white-space:nowrap;color:#f5f7fa;font-size:.9em;font-weight:500;
-      animation:labelIn .21s;
     }
     .carousel-item.selected ~ .item-label{display:block;}
-    @keyframes labelIn{
-      from{opacity:0;transform:translateX(-50%) translateY(-5px);}
-      to{opacity:1;transform:translateX(-50%) translateY(0);}
-    }
 
     .detail-section{
       position:fixed;top:378px;left:0;width:100vw;
       height:calc(100vh - 378px);overflow-y:auto;
       padding:40px 90px 60px;
-      opacity:0;pointer-events:none;
-      transition:opacity .7s cubic-bezier(.42,1,.72,1);
+      opacity:1;pointer-events:auto; /* sem fade down */
       background:linear-gradient(to bottom,rgba(0,0,0,0.1),transparent);
     }
-    .detail-section.active{opacity:1;pointer-events:auto;}
 
     .detail-inner{
       display:grid;
-      grid-template-columns:300px 1fr 240px 350px;
+      grid-template-columns:300px 1.1fr 240px 260px; /* 4 colunas */
       gap:28px;align-items:start;max-width:1500px;
     }
+
     .cover-image{
       width:100%;height:240px;border-radius:16px;border:2px solid #42aaff;
       object-fit:cover;box-shadow:0 8px 32px rgba(0,0,0,0.4);
@@ -125,6 +119,8 @@
     .side-card-title{font-weight:600;color:#42aaff;font-size:.95em;margin-bottom:4px;}
     .side-card-text{font-size:.85em;color:#dfe8ff;opacity:.8;line-height:1.4;}
 
+    .details-column{display:flex;flex-direction:column;gap:16px;}
+
     .detail-box{
       border-radius:16px;border:2px solid #42aaff;
       overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.7);
@@ -154,17 +150,27 @@
       font-size:.8em;font-weight:500;
     }
 
-    .pdf-list{
-      margin-top:16px;padding-top:16px;
-      border-top:1px solid rgba(66,170,255,0.2);
+    .pdf-box{
+      border-radius:16px;
+      border:2px solid #42aaff;
+      background:rgba(8,12,24,0.9);
+      padding:16px 18px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.7);
     }
-    .pdf-list h3{
-      color:#42aaff;margin:0 0 10px;font-size:1em;font-weight:600;
+    .pdf-box h3{
+      margin:0 0 10px;
+      font-size:1em;
+      font-weight:600;
+      color:#42aaff;
     }
     .pdf-item{
-      display:flex;align-items:center;gap:10px;
-      padding:6px 8px;border-radius:10px;
-      cursor:pointer;text-decoration:none;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:6px 4px;
+      border-radius:10px;
+      cursor:pointer;
+      text-decoration:none;
       transition:background .2s ease, transform .15s ease;
     }
     .pdf-item:hover{
@@ -176,25 +182,10 @@
       background:linear-gradient(135deg,#ff4b4b,#ff9b71);
       display:flex;align-items:center;justify-content:center;
       color:#fff;font-weight:700;font-size:.8em;
-      box-shadow:0 0 10px rgba(0,0,0,0.4);
+      box-shadow:0 0 10px rgba(0,0,0,.4);
     }
     .pdf-text-main{font-size:.9em;color:#f5f7fa;font-weight:500;}
     .pdf-text-sub{font-size:.78em;color:#c5d6ff;opacity:.85;}
-
-    .scroll-btn{
-      position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
-      background:rgba(10,14,28,0.9);border:1.5px solid rgba(66,170,255,0.5);
-      width:44px;height:44px;border-radius:50%;
-      cursor:pointer;display:flex;align-items:center;justify-content:center;
-      color:#42aaff;font-size:1.3em;transition:all .3s ease;
-      opacity:0;pointer-events:none;z-index:50;
-    }
-    .scroll-btn.visible{opacity:1;pointer-events:auto;}
-    .scroll-btn:hover{
-      background:rgba(66,170,255,0.1);
-      border-color:#42aaff;
-      box-shadow:0 0 16px rgba(66,170,255,0.4);
-    }
   </style>
 </head>
 <body>
@@ -210,7 +201,6 @@
   </div>
 
   <div class="detail-section" id="detailSection"></div>
-  <button class="scroll-btn" id="scrollBtn" onclick="scrollToCarousel()">↑</button>
 
   <script>
     const experiencias = [
@@ -397,7 +387,7 @@
         id: 8,
         title: "Nadador-Salvador",
         role: "Nadador-Salvador Profissional",
-        description: "Vigilância balnear em praias e piscinas, com foco em segurança dos banhistas.",
+        description: "Vigilância balnear em praias e piscinas, com foco na segurança dos banhistas.",
         carouselImage: "cardafss.png",
         cover: "cardafss.png",
         sideCards: [
@@ -458,47 +448,46 @@
           {
             file: "pdfs/trabalhos_ufcd.pdf",
             titulo: "Dossier de Trabalhos UFCD",
-            subtitulo: "Conjunto de exercícios, testes e fichas de trabalho."
+            subtitulo: "Exercícios, testes e fichas de trabalho."
           }
         ]
       },
 
-      /* PLACEHOLDERS 11–34 (personaliza à vontade) */
-      ...Array.from({length: 24}, (_, i) => {
-        const id = 11 + i;
-        return {
+      /* PLACEHOLDERS 11–34 */
+      ...Array.from({length:24},(_,i)=>{
+        const id=11+i;
+        return{
           id,
-          title: "Experiência " + id,
-          role: "Função / Cargo",
-          description: "Descrição da experiência " + id + ".",
-          carouselImage: "card" + id + ".png",
-          cover: "card" + id + ".png",
-          sideCards: [
-            { title: "Ponto 1", text: "Descrição do ponto 1." },
-            { title: "Ponto 2", text: "Descrição do ponto 2." },
-            { title: "Ponto 3", text: "Descrição do ponto 3." }
+          title:"Experiência "+id,
+          role:"Função / Cargo",
+          description:"Descrição da experiência "+id+".",
+          carouselImage:"card"+id+".png",
+          cover:"card"+id+".png",
+          sideCards:[
+            {title:"Ponto 1",text:"Descrição do ponto 1."},
+            {title:"Ponto 2",text:"Descrição do ponto 2."},
+            {title:"Ponto 3",text:"Descrição do ponto 3."}
           ],
-          responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-          skills: ["Skill 1", "Skill 2"],
-          achievements: ["Realização 1", "Realização 2"],
-          pdfs: []   // aqui metes pdfs diferentes por experiência quando quiseres
+          responsibilities:["Responsabilidade 1","Responsabilidade 2"],
+          skills:["Skill 1","Skill 2"],
+          achievements:["Realização 1","Realização 2"],
+          pdfs:[]
         };
       })
     ];
 
     const carouselTrack = document.getElementById('carouselTrack');
     const detailSection = document.getElementById('detailSection');
-    const scrollBtn = document.getElementById('scrollBtn');
     let selectedId = 1;
     const quadW = 160;
     const gap = 38;
 
     function renderCarousel() {
-      experiencias.forEach(exp => {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'carousel-item-wrapper';
-        wrapper.innerHTML = `
-          <div class="carousel-item ${exp.id === 1 ? 'selected' : ''}" onclick="selectExperience(${exp.id})">
+      experiencias.forEach(exp=>{
+        const wrapper=document.createElement('div');
+        wrapper.className='carousel-item-wrapper';
+        wrapper.innerHTML=`
+          <div class="carousel-item ${exp.id===1?'selected':''}" onclick="selectExperience(${exp.id})">
             <img src="${exp.carouselImage}" alt="${exp.title}">
           </div>
           <span class="item-label">${exp.title}</span>
@@ -508,8 +497,8 @@
     }
 
     function renderDetails() {
-      detailSection.innerHTML = experiencias.map(exp => `
-        <div class="detail-inner" id="detail-${exp.id}" style="display:${exp.id === 1 ? 'grid' : 'none'};">
+      detailSection.innerHTML=experiencias.map(exp=>`
+        <div class="detail-inner" id="detail-${exp.id}" style="display:${exp.id===1?'grid':'none'};">
           <img src="${exp.cover}" class="cover-image" alt="${exp.title}">
 
           <div class="info-central">
@@ -522,7 +511,7 @@
           </div>
 
           <div class="side-column">
-            ${exp.sideCards.map(card => `
+            ${exp.sideCards.map(card=>`
               <div class="side-card">
                 <div class="side-card-title">${card.title}</div>
                 <div class="side-card-text">${card.text}</div>
@@ -530,76 +519,68 @@
             `).join('')}
           </div>
 
-          <div class="detail-box">
-            <div class="detail-box-content">
-              <h3>📋 Responsabilidades</h3>
-              <ul>
-                ${exp.responsibilities.map(r => `<li>${r}</li>`).join('')}
-              </ul>
+          <div class="details-column">
+            <div class="detail-box">
+              <div class="detail-box-content">
+                <h3>📋 Responsabilidades</h3>
+                <ul>
+                  ${exp.responsibilities.map(r=>`<li>${r}</li>`).join('')}
+                </ul>
 
-              <div class="skills-section">
-                <h3>🛠️ Skills</h3>
-                <div class="skills-wrap">
-                  ${exp.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                <div class="skills-section">
+                  <h3>🛠️ Skills</h3>
+                  <div class="skills-wrap">
+                    ${exp.skills.map(skill=>`<span class="skill-tag">${skill}</span>`).join('')}
+                  </div>
+                </div>
+
+                <div class="skills-section">
+                  <h3>✨ Realizações</h3>
+                  <ul>
+                    ${exp.achievements.map(ach=>`<li>${ach}</li>`).join('')}
+                  </ul>
                 </div>
               </div>
-
-              <div class="skills-section">
-                <h3>✨ Realizações</h3>
-                <ul>
-                  ${exp.achievements.map(ach => `<li>${ach}</li>`).join('')}
-                </ul>
-              </div>
-
-              ${exp.pdfs && exp.pdfs.length ? `
-              <div class="pdf-list">
-                <h3>📎 PDFs relacionados</h3>
-                ${exp.pdfs.map(pdf => `
-                  <a class="pdf-item" href="${pdf.file}" target="_blank">
-                    <div class="pdf-icon">PDF</div>
-                    <div>
-                      <div class="pdf-text-main">${pdf.titulo}</div>
-                      <div class="pdf-text-sub">${pdf.subtitulo}</div>
-                    </div>
-                  </a>
-                `).join('')}
-              </div>` : ''}
             </div>
+
+            ${exp.pdfs && exp.pdfs.length ? `
+            <div class="pdf-box">
+              <h3>📎 PDFs relacionados</h3>
+              ${exp.pdfs.map(pdf=>`
+                <a class="pdf-item" href="${pdf.file}" target="_blank">
+                  <div class="pdf-icon">PDF</div>
+                  <div>
+                    <div class="pdf-text-main">${pdf.titulo}</div>
+                    <div class="pdf-text-sub">${pdf.subtitulo}</div>
+                  </div>
+                </a>
+              `).join('')}
+            </div>` : ''}
           </div>
         </div>
       `).join('');
     }
 
-    function selectExperience(id) {
-      selectedId = id;
-      document.querySelectorAll('.carousel-item').forEach((item, idx) => {
-        if (experiencias[idx].id === id) item.classList.add('selected');
+    function selectExperience(id){
+      selectedId=id;
+      document.querySelectorAll('.carousel-item').forEach((item,idx)=>{
+        if(experiencias[idx].id===id)item.classList.add('selected');
         else item.classList.remove('selected');
       });
-      const idx = experiencias.findIndex(e => e.id === id);
-      const offset = (quadW + gap) * idx + quadW / 2;
-      carouselTrack.style.transform =
+      const idx=experiencias.findIndex(e=>e.id===id);
+      const offset=(quadW+gap)*idx+quadW/2;
+      carouselTrack.style.transform=
         `translateX(calc(50vw - 90px - ${offset}px))`;
-      document.querySelectorAll('.detail-inner').forEach(d => d.style.display = 'none');
-      document.getElementById(`detail-${id}`).style.display = 'grid';
-      detailSection.classList.add('active');
-      scrollBtn.classList.add('visible');
+      document.querySelectorAll('.detail-inner').forEach(d=>d.style.display='none');
+      document.getElementById(`detail-${id}`).style.display='grid';
     }
 
-    function scrollToCarousel() {
-      document.querySelector('.carousel-section').scrollIntoView({behavior:'smooth'});
-      detailSection.classList.remove('active');
-      scrollBtn.classList.remove('visible');
-    }
-
-    document.addEventListener('keydown', e => {
-      const currentIdx = experiencias.findIndex(exp => exp.id === selectedId);
-      if (e.key === 'ArrowRight' && currentIdx < experiencias.length - 1)
-        selectExperience(experiencias[currentIdx + 1].id);
-      else if (e.key === 'ArrowLeft' && currentIdx > 0)
-        selectExperience(experiencias[currentIdx - 1].id);
-      else if (e.key === 'ArrowDown')
-        selectExperience(selectedId);
+    document.addEventListener('keydown',e=>{
+      const currentIdx=experiencias.findIndex(exp=>exp.id===selectedId);
+      if(e.key==='ArrowRight' && currentIdx<experiencias.length-1)
+        selectExperience(experiencias[currentIdx+1].id);
+      else if(e.key==='ArrowLeft' && currentIdx>0)
+        selectExperience(experiencias[currentIdx-1].id);
     });
 
     renderCarousel();
