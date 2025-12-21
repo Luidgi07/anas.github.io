@@ -3,514 +3,228 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Experiências - PS4 Carousel com Fotos Reais</title>
+  <title>Experiências - PS4 Carousel com PDFs</title>
   <style>
-    /* BASE */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html,body{
+      width:100vw;height:100vh;
+      background:radial-gradient(circle at top,#1e2a3d 0%,#05070b 55%,#000000 100%);
+      font-family:'Segoe UI',Arial,sans-serif;
+      color:#f5f7fa;overflow:hidden;
+    }
+    .top-hud{
+      position:fixed;top:0;left:0;width:100vw;height:58px;
+      background:rgba(18,26,36,0.90);
+      display:flex;align-items:center;padding:0 32px;
+      z-index:9999;border-bottom:2.5px solid #42aaff;
+      box-shadow:0 2px 18px #12244477;
+    }
+    .hud-left{display:flex;align-items:center;gap:18px;}
+    .back-btn{
+      background:none;border:none;color:#e9f5fa;font-size:1.5em;
+      cursor:pointer;display:flex;align-items:center;justify-content:center;
+      width:40px;height:40px;transition:filter .12s;
+    }
+    .back-btn:hover{filter:brightness(1.22) drop-shadow(0 2px 6px #069cffbb);}
+    .hud-title{font-size:1.3em;font-weight:600;letter-spacing:.06em;color:#42aaff;}
+
+    .carousel-section{
+      position:fixed;top:58px;left:0;width:100vw;height:320px;
+      overflow:hidden;padding:40px 0 40px 90px;
+      background:linear-gradient(to bottom,rgba(0,0,0,0.2),transparent);
+    }
+    .carousel-track{
+      display:flex;gap:38px;align-items:flex-end;
+      transition:transform .43s cubic-bezier(.42,1,.72,1);
+    }
+    .carousel-item-wrapper{
+      position:relative;display:flex;flex-direction:column;align-items:center;
+    }
+    .carousel-item{
+      width:160px;height:240px;background:#23283a;border:2.5px solid transparent;
+      border-radius:8px;cursor:pointer;overflow:hidden;
+      display:flex;align-items:center;justify-content:center;position:relative;
+      transition:transform .22s cubic-bezier(.32,1.35,.62,1),
+                 box-shadow .18s,border .18s;
+    }
+    .carousel-item img{width:100%;height:100%;object-fit:cover;}
+    .carousel-item::after{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(135deg,rgba(0,0,0,0.3),rgba(66,170,255,0.1));
+      pointer-events:none;
+    }
+    .carousel-item.selected{
+      transform:scale(1.22);
+      box-shadow:0 0 40px 5px #42aaffcc,0 5px 35px #000c;
+      border-color:#42aaff;
+    }
+    .item-label{
+      display:none;position:absolute;bottom:-45px;left:50%;
+      transform:translateX(-50%);
+      background:rgba(10,14,28,0.88);
+      padding:8px 16px;border-radius:6px;
+      border:1px solid rgba(66,170,255,0.3);
+      white-space:nowrap;color:#f5f7fa;font-size:.9em;font-weight:500;
+      animation:labelIn .21s;
+    }
+    .carousel-item.selected ~ .item-label{display:block;}
+    @keyframes labelIn{
+      from{opacity:0;transform:translateX(-50%) translateY(-5px);}
+      to{opacity:1;transform:translateX(-50%) translateY(0);}
     }
 
-    html, body {
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at top, #1e2a3d 0%, #05070b 55%, #000000 100%);
-      font-family: 'Segoe UI', Arial, sans-serif;
-      color: #f5f7fa;
-      overflow: hidden;
+    .detail-section{
+      position:fixed;top:378px;left:0;width:100vw;
+      height:calc(100vh - 378px);overflow-y:auto;
+      padding:40px 90px 60px;
+      opacity:0;pointer-events:none;
+      transition:opacity .7s cubic-bezier(.42,1,.72,1);
+      background:linear-gradient(to bottom,rgba(0,0,0,0.1),transparent);
+    }
+    .detail-section.active{opacity:1;pointer-events:auto;}
+
+    .detail-inner{
+      display:grid;
+      grid-template-columns:300px 1fr 240px 350px;
+      gap:28px;align-items:start;max-width:1500px;
+    }
+    .cover-image{
+      width:100%;height:240px;border-radius:16px;border:2px solid #42aaff;
+      object-fit:cover;box-shadow:0 8px 32px rgba(0,0,0,0.4);
+    }
+    .info-central{color:#f5f7fa;display:flex;flex-direction:column;}
+    .info-central h1{
+      font-size:2.1em;letter-spacing:.14em;text-transform:uppercase;
+      margin:0 0 8px;text-shadow:0 3px 10px #000;font-weight:600;color:#42aaff;
+    }
+    .info-central .tagline{margin:0 0 16px;opacity:.9;font-weight:500;color:#dfe8ff;}
+    .info-central p{margin:0 0 12px;font-size:.95em;line-height:1.6;color:#dfe8ff;}
+    .info-buttons{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;}
+    .btn-detail{
+      background:linear-gradient(135deg,#14aaff 60%,#75d5ff 120%);
+      border:none;color:#fff;padding:10px 22px;font-weight:600;
+      border-radius:6px;cursor:pointer;font-size:.9em;letter-spacing:.04em;
+      transition:all .3s ease;
+    }
+    .btn-detail:hover{
+      transform:translateY(-2px);
+      box-shadow:0 8px 20px rgba(20,170,255,0.4);
     }
 
-    /* TOP HUD */
-    .top-hud {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 58px;
-      background: rgba(18, 26, 36, 0.90);
-      display: flex;
-      align-items: center;
-      padding: 0 32px;
-      z-index: 9999;
-      border-bottom: 2.5px solid #42aaff;
-      box-shadow: 0 2px 18px #12244477;
+    .side-column{display:flex;flex-direction:column;gap:12px;}
+    .side-card{
+      background:rgba(8,12,24,0.65);border-radius:12px;padding:12px;
+      display:flex;flex-direction:column;
+      border:1px solid rgba(255,255,255,0.10);
+      backdrop-filter:blur(12px);transition:all .3s ease;
+    }
+    .side-card:hover{
+      background:rgba(20,50,100,0.8);
+      border-color:rgba(66,170,255,0.3);
+    }
+    .side-card-title{font-weight:600;color:#42aaff;font-size:.95em;margin-bottom:4px;}
+    .side-card-text{font-size:.85em;color:#dfe8ff;opacity:.8;line-height:1.4;}
+
+    .detail-box{
+      border-radius:16px;border:2px solid #42aaff;
+      overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.7);
+      background:rgba(8,12,24,0.8);max-height:280px;overflow-y:auto;
+    }
+    .detail-box-content{
+      width:100%;padding:20px;display:flex;flex-direction:column;
+      color:#dfe8ff;font-size:.9em;line-height:1.6;
+    }
+    .detail-box-content h3{
+      color:#42aaff;margin:0 0 12px;font-size:1em;font-weight:600;
+    }
+    .detail-box-content ul{margin:0;padding-left:18px;list-style:none;}
+    .detail-box-content li{margin-bottom:8px;}
+    .detail-box-content li::before{
+      content:'✓ ';color:#42aaff;font-weight:600;margin-right:6px;
+    }
+    .skills-section{
+      margin-top:16px;padding-top:16px;
+      border-top:1px solid rgba(66,170,255,0.2);
+    }
+    .skills-wrap{display:flex;flex-wrap:wrap;gap:6px;}
+    .skill-tag{
+      background:rgba(66,170,255,0.15);
+      border:1px solid rgba(66,170,255,0.4);
+      color:#42aaff;padding:4px 10px;border-radius:12px;
+      font-size:.8em;font-weight:500;
     }
 
-    .hud-left {
-      display: flex;
-      align-items: center;
-      gap: 18px;
+    .pdf-list{
+      margin-top:16px;padding-top:16px;
+      border-top:1px solid rgba(66,170,255,0.2);
     }
-
-    .back-btn {
-      background: none;
-      border: none;
-      color: #e9f5fa;
-      font-size: 1.5em;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      transition: filter 0.12s;
-      width: 40px;
-      height: 40px;
-      justify-content: center;
+    .pdf-list h3{
+      color:#42aaff;margin:0 0 10px;font-size:1em;font-weight:600;
     }
-
-    .back-btn:hover {
-      filter: brightness(1.22) drop-shadow(0 2px 6px #069cffbb);
+    .pdf-item{
+      display:flex;align-items:center;gap:10px;
+      padding:6px 8px;border-radius:10px;
+      cursor:pointer;text-decoration:none;
+      transition:background .2s ease, transform .15s ease;
     }
-
-    .hud-title {
-      font-size: 1.3em;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      color: #42aaff;
+    .pdf-item:hover{
+      background:rgba(66,170,255,0.12);
+      transform:translateX(2px);
     }
-
-    /* CAROUSEL SECTION */
-    .carousel-section {
-      position: fixed;
-      top: 58px;
-      left: 0;
-      width: 100vw;
-      height: 320px;
-      overflow: hidden;
-      padding: 40px 0 40px 90px;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.2), transparent);
+    .pdf-icon{
+      width:26px;height:26px;border-radius:6px;
+      background:linear-gradient(135deg,#ff4b4b,#ff9b71);
+      display:flex;align-items:center;justify-content:center;
+      color:#fff;font-weight:700;font-size:.8em;
+      box-shadow:0 0 10px rgba(0,0,0,0.4);
     }
+    .pdf-text-main{font-size:.9em;color:#f5f7fa;font-weight:500;}
+    .pdf-text-sub{font-size:.78em;color:#c5d6ff;opacity:.85;}
 
-    .carousel-track {
-      display: flex;
-      gap: 38px;
-      align-items: flex-end;
-      transition: transform 0.43s cubic-bezier(0.42, 1, 0.72, 1);
+    .scroll-btn{
+      position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
+      background:rgba(10,14,28,0.9);border:1.5px solid rgba(66,170,255,0.5);
+      width:44px;height:44px;border-radius:50%;
+      cursor:pointer;display:flex;align-items:center;justify-content:center;
+      color:#42aaff;font-size:1.3em;transition:all .3s ease;
+      opacity:0;pointer-events:none;z-index:50;
     }
-
-    /* CAROUSEL ITEMS */
-    .carousel-item-wrapper {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .carousel-item {
-      width: 160px;
-      height: 240px;
-      background: #23283a;
-      border: 2.5px solid transparent;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: transform 0.22s cubic-bezier(0.32, 1.35, 0.62, 1),
-                  box-shadow 0.18s,
-                  border 0.18s;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-
-    .carousel-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .carousel-item::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(66, 170, 255, 0.1));
-      pointer-events: none;
-    }
-
-    .carousel-item.selected {
-      transform: scale(1.22);
-      box-shadow: 0 0 40px 5px #42aaffcc, 0 5px 35px #000c;
-      border-color: #42aaff;
-    }
-
-    /* LABEL BAIXO */
-    .item-label {
-      display: none;
-      position: absolute;
-      bottom: -45px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(10, 14, 28, 0.88);
-      padding: 8px 16px;
-      border-radius: 6px;
-      border: 1px solid rgba(66, 170, 255, 0.3);
-      white-space: nowrap;
-      color: #f5f7fa;
-      font-size: 0.9em;
-      font-weight: 500;
-      animation: labelIn 0.21s;
-    }
-
-    .carousel-item.selected ~ .item-label {
-      display: block;
-    }
-
-    @keyframes labelIn {
-      from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(-5px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-      }
-    }
-
-    /* DETAIL SECTION */
-    .detail-section {
-      position: fixed;
-      top: 378px;
-      left: 0;
-      width: 100vw;
-      height: calc(100vh - 378px);
-      overflow-y: auto;
-      padding: 40px 90px 60px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.7s cubic-bezier(0.42, 1, 0.72, 1);
-      background: linear-gradient(to bottom, rgba(0,0,0,0.1), transparent);
-    }
-
-    .detail-section.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    /* DETAIL CONTAINER */
-    .detail-inner {
-      display: grid;
-      grid-template-columns: 300px 1fr 240px 350px;
-      gap: 28px;
-      align-items: start;
-      max-width: 1500px;
-    }
-
-    /* COVER IMAGE */
-    .cover-image {
-      width: 100%;
-      height: 240px;
-      border-radius: 16px;
-      border: 2px solid #42aaff;
-      object-fit: cover;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    }
-
-    /* INFO CENTRAL */
-    .info-central {
-      color: #f5f7fa;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-    }
-
-    .info-central h1 {
-      font-size: 2.1em;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin: 0 0 8px 0;
-      text-shadow: 0 3px 10px #000;
-      font-weight: 600;
-      color: #42aaff;
-    }
-
-    .info-central .tagline {
-      margin: 0 0 16px 0;
-      opacity: 0.9;
-      font-weight: 500;
-      color: #dfe8ff;
-    }
-
-    .info-central p {
-      margin: 0 0 12px 0;
-      font-size: 0.95em;
-      line-height: 1.6;
-      color: #dfe8ff;
-      opacity: 0.95;
-    }
-
-    .info-buttons {
-      margin-top: 16px;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .btn-detail {
-      background: linear-gradient(135deg, #14aaff 60%, #75d5ff 120%);
-      border: none;
-      color: #fff;
-      padding: 10px 22px;
-      font-weight: 600;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.9em;
-      letter-spacing: 0.04em;
-      transition: all 0.3s ease;
-    }
-
-    .btn-detail:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(20, 170, 255, 0.4);
-    }
-
-    /* SIDE CARDS */
-    .side-column {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .side-card {
-      background: rgba(8, 12, 24, 0.65);
-      border-radius: 12px;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      border: 1px solid rgba(255, 255, 255, 0.10);
-      backdrop-filter: blur(12px);
-      transition: all 0.3s ease;
-    }
-
-    .side-card:hover {
-      background: rgba(20, 50, 100, 0.8);
-      border-color: rgba(66, 170, 255, 0.3);
-    }
-
-    .side-card-title {
-      font-weight: 600;
-      color: #42aaff;
-      font-size: 0.95em;
-      margin-bottom: 4px;
-    }
-
-    .side-card-text {
-      font-size: 0.85em;
-      color: #dfe8ff;
-      opacity: 0.8;
-      line-height: 1.4;
-    }
-
-    /* DETAIL BOX */
-    .detail-box {
-      border-radius: 16px;
-      border: 2px solid #42aaff;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-      background: rgba(8, 12, 24, 0.8);
-      max-height: 280px;
-      overflow-y: auto;
-    }
-
-    .detail-box-content {
-      width: 100%;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      color: #dfe8ff;
-      font-size: 0.9em;
-      line-height: 1.6;
-    }
-
-    .detail-box-content h3 {
-      color: #42aaff;
-      margin: 0 0 12px 0;
-      font-size: 1em;
-      font-weight: 600;
-    }
-
-    .detail-box-content ul {
-      margin: 0;
-      padding-left: 18px;
-      list-style: none;
-    }
-
-    .detail-box-content li {
-      margin-bottom: 8px;
-    }
-
-    .detail-box-content li::before {
-      content: '✓ ';
-      color: #42aaff;
-      font-weight: 600;
-      margin-right: 6px;
-    }
-
-    /* SKILLS */
-    .skills-section {
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid rgba(66, 170, 255, 0.2);
-    }
-
-    .skills-wrap {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .skill-tag {
-      background: rgba(66, 170, 255, 0.15);
-      border: 1px solid rgba(66, 170, 255, 0.4);
-      color: #42aaff;
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 0.8em;
-      font-weight: 500;
-    }
-
-    /* SCROLL BTN */
-    .scroll-btn {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(10, 14, 28, 0.9);
-      border: 1.5px solid rgba(66, 170, 255, 0.5);
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #42aaff;
-      font-size: 1.3em;
-      transition: all 0.3s ease;
-      opacity: 0;
-      pointer-events: none;
-      z-index: 50;
-    }
-
-    .scroll-btn.visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .scroll-btn:hover {
-      background: rgba(66, 170, 255, 0.1);
-      border-color: #42aaff;
-      box-shadow: 0 0 16px rgba(66, 170, 255, 0.4);
-    }
-
-    /* RESPONSIVO */
-    @media (max-width: 1200px) {
-      .carousel-section {
-        padding: 30px 0 30px 40px;
-        height: 280px;
-      }
-
-      .carousel-item {
-        width: 140px;
-        height: 210px;
-      }
-
-      .detail-inner {
-        grid-template-columns: 250px 1fr 220px;
-      }
-
-      .detail-section {
-        padding: 32px 40px 60px;
-      }
-    }
-
-    @media (max-width: 900px) {
-      .carousel-section {
-        height: auto;
-        padding: 20px;
-      }
-
-      .carousel-track {
-        overflow-x: auto;
-        gap: 16px;
-      }
-
-      .carousel-item {
-        width: 120px;
-        height: 180px;
-        flex-shrink: 0;
-      }
-
-      .detail-inner {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
-
-      .detail-section {
-        top: auto;
-        height: auto;
-        padding: 20px;
-      }
-    }
-
-    /* SCROLLBAR */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: rgba(66, 170, 255, 0.05);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: rgba(66, 170, 255, 0.3);
-      border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(66, 170, 255, 0.5);
+    .scroll-btn.visible{opacity:1;pointer-events:auto;}
+    .scroll-btn:hover{
+      background:rgba(66,170,255,0.1);
+      border-color:#42aaff;
+      box-shadow:0 0 16px rgba(66,170,255,0.4);
     }
   </style>
 </head>
 <body>
-  <!-- TOP HUD -->
   <div class="top-hud">
     <div class="hud-left">
-      <button class="back-btn" onclick="window.location.href='index.html?skipIntro=1'">
-        ← 
-        </button>
+      <button class="back-btn" onclick="window.location.href='index.html?skipIntro=1'">←</button>
       <span class="hud-title">EXPERIÊNCIAS</span>
     </div>
   </div>
 
-  <!-- CAROUSEL -->
   <div class="carousel-section">
-    <div class="carousel-track" id="carouselTrack">
-      <!-- Preenchido por JS -->
-    </div>
+    <div class="carousel-track" id="carouselTrack"></div>
   </div>
 
-  <!-- DETALHES -->
   <div class="detail-section" id="detailSection"></div>
-
-  <!-- SCROLL UP BTN -->
   <button class="scroll-btn" id="scrollBtn" onclick="scrollToCarousel()">↑</button>
 
   <script>
     const experiencias = [
       {
         id: 1,
-        title: "0563(10)",
-        role: "Formador: Isabel Silva",
-        year: 2025,
-        description: "...",
+        title: "ANL",
+        role: "Juiz de 3ª de natação pura",
+        description: "Participação como juiz de competições de natação pura, garantindo conformidade com regulamentos internacionais.",
         carouselImage: "cardanl.png",
         cover: "cardanl.png",
         sideCards: [
-          { title: "Competências", text: "..." },
-          { title: "Responsabilidades", text: "..." },
-          { title: "Área", text: "..." }
+          { title: "Competências", text: "Conhecimento de regulamentos internacionais de natação." },
+          { title: "Responsabilidades", text: "Supervisão de provas e garantia de conformidade." },
+          { title: "Área", text: "Natação pura - Competições locais e nacionais." }
         ],
         responsibilities: [
           "Supervisar competições de natação pura",
@@ -522,652 +236,254 @@
         achievements: [
           "Certificação como Juiz Nível 3",
           "Participação em múltiplas competições"
+        ],
+        pdfs: [
+          {
+            file: "pdfs/anl_relatorio.pdf",
+            titulo: "Relatório de Atividades ANL",
+            subtitulo: "Resumo detalhado das provas e funções exercidas."
+          },
+          {
+            file: "pdfs/anl_certificado.pdf",
+            titulo: "Certificado Juiz de Natação",
+            subtitulo: "Certificação emitida pela associação de natação."
+          }
         ]
       },
       {
         id: 2,
         title: "CardioID",
         role: "Estágio em Análise de Sinais Biomédicos",
-        year: 2025,
-        description: "Estágio especializado em análise de sinais cardíacos e processamento de dados ECG em contexto clínico real.",
+        description: "Estágio em análise de sinais cardíacos e processamento de dados ECG em contexto clínico real.",
         carouselImage: "cardcardioid.png",
-        cover: "https://images.unsplash.com/photo-1576091160550-112173f7f869?w=600&h=400&fit=crop",
+        cover: "cardcardioid.png",
         sideCards: [
           { title: "Análise ECG", text: "Processamento avançado de sinais cardíacos em tempo real." },
           { title: "Investigação", text: "Algoritmos de detecção automática de anomalias." },
-          { title: "Equipamento", text: "Integração com sistemas médicos hospitalares." }
+          { title: "Integração", text: "Integração com sistemas clínicos e PACS." }
         ],
         responsibilities: [
-          "Análise e processamento de sinais ECG em tempo real",
+          "Aquisição e processamento de sinais ECG",
           "Desenvolvimento de algoritmos em Python",
-          "Tratamento e visualização de dados biomédicos",
-          "Documentação técnica e relatórios de investigação"
+          "Validação de métricas de desempenho",
+          "Produção de documentação técnica"
         ],
-        skills: ["Python", "ECG", "DSP", "Jupyter", "SQL", "FFT", "Pandas", "Signal Processing"],
+        skills: ["Python", "ECG", "DSP", "Pandas", "FFT"],
         achievements: [
-          "Algoritmo de detecção com acurácia elevada",
-          "Processamento tempo real implementado",
-          "Integração PACS/Hospital"
+          "Prototipagem de algoritmo de detecção de arritmias"
+        ],
+        pdfs: [
+          {
+            file: "pdfs/cardioid_relatorio.pdf",
+            titulo: "Relatório de Estágio CardioID",
+            subtitulo: "Descrição das tarefas, resultados e conclusões."
+          }
         ]
       },
       {
         id: 3,
         title: "Careceiver",
-        role: "Estágio na Startup Careeceiver",
-        year: 2023,
-        description: "Participação em estágio dentro de um ambiente startup focado em desenvolvimento de carreira e inovação.",
+        role: "Estágio em ambiente Startup",
+        description: "Estágio em ambiente startup com foco em inovação e desenvolvimento de carreira.",
         carouselImage: "cardcareceiver.png",
-        cover: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
+        cover: "cardcareceiver.png",
         sideCards: [
-          { title: "Startup", text: "Ambiente dinâmico com foco em inovação e desenvolvimento." },
-          { title: "Carreira", text: "Desenvolvimento profissional e crescimento contínuo." },
-          { title: "Competências", text: "Trabalho em equipa multidisciplinar e multifuncional." }
+          { title: "Startup", text: "Ambiente dinâmico e multidisciplinar." },
+          { title: "Carreira", text: "Desenvolvimento de competências transversais." },
+          { title: "Projetos", text: "Participação em funcionalidades de plataforma." }
         ],
         responsibilities: [
-          "Desenvolvimento de funcionalidades de plataforma",
-          "Participação em sprints e planejamento ágil",
-          "Colaboração com diferentes departamentos",
-          "Implementação de melhorias e novas features"
+          "Desenvolver funcionalidades para a plataforma",
+          "Participar em reuniões de planeamento ágil",
+          "Colaborar com equipas multidisciplinares"
         ],
-        skills: ["Startup", "Desenvolvimento Ágil", "Web Development", "Team Collaboration"],
+        skills: ["Agile", "Colaboração", "Web Development"],
         achievements: [
-          "Participação em lançamento de novas features",
-          "Aprendizagem contínua em ambiente de startup",
-          "Contribuição para crescimento da empresa"
-        ]
+          "Contribuição para lançamento de novas features"
+        ],
+        pdfs: []
       },
       {
         id: 4,
         title: "ArteFisio",
         role: "Design Gráfico e Web",
-        year: 2024,
-        description: "Trabalho em design gráfico para cartões de visita e desenvolvimento web de sites para empresas e colaboradores.",
+        description: "Design de identidade visual e desenvolvimento de websites para a ArteFisio.",
         carouselImage: "cardartefisio.png",
-        cover: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=400&fit=crop",
+        cover: "cardartefisio.png",
         sideCards: [
-          { title: "Design Gráfico", text: "Criação de identidade visual e cartões de visita." },
-          { title: "Web Design", text: "Desenvolvimento de websites responsivos e modernos." },
-          { title: "Gestão", text: "Gestão de projetos web e comunicação com clientes." }
+          { title: "Design", text: "Criação de cartões de visita e material gráfico." },
+          { title: "Web", text: "Desenvolvimento de sites responsivos." },
+          { title: "Gestão", text: "Acompanhamento de clientes e revisões." }
         ],
         responsibilities: [
-          "Desenho de cartões de visita e material gráfico",
-          "Criação e gestão de websites para empresas",
-          "Design responsivo e UX/UI",
-          "Comunicação com clientes e iteração de designs"
+          "Criar layouts e identidade visual",
+          "Desenvolver interfaces web responsivas",
+          "Manter conteúdo e atualizações"
         ],
-        skills: ["Design Gráfico", "Web Development", "HTML/CSS", "JavaScript", "UI/UX", "Adobe Creative Suite"],
+        skills: ["HTML/CSS", "JavaScript", "UI/UX", "Design Gráfico"],
         achievements: [
-          "Design de múltiplos cartões de visita",
-          "Criação de websites funcionais para clientes",
-          "Gestão e manutenção de projetos web"
-        ]
+          "Conceção de vários sites funcionais para clientes"
+        ],
+        pdfs: []
       },
       {
         id: 5,
         title: "IBEB",
         role: "Estágio em Segmentação Tumoral",
-        year: 2025,
-        description: "Estágio em segmentação tumoral e previsão de desfechos clínicos usando ressonância magnética da mama.",
+        description: "Estudo de segmentação tumoral e previsão de desfechos clínicos em RM mamária.",
         carouselImage: "cardibeb.png",
-        cover: "https://images.unsplash.com/photo-1576091160693-112ec50bc5ad?w=600&h=400&fit=crop",
+        cover: "cardibeb.png",
         sideCards: [
-          { title: "Segmentação Tumoral", text: "Análise de imagens médicas com ML e segmentação." },
-          { title: "Investigação", text: "Pesquisa em previsão de desfechos clínicos." },
-          { title: "Imagiologia", text: "Ressonância magnética e interpretação clínica." }
+          { title: "Segmentação", text: "Implementação de algoritmos de segmentação." },
+          { title: "Modelos", text: "Testes com modelos preditivos." },
+          { title: "Investigação", text: "Análise de datasets clínicos." }
         ],
         responsibilities: [
-          "Análise de imagens de ressonância magnética",
-          "Desenvolvimento de algoritmos de segmentação tumoral",
-          "Processamento e tratamento de dados médicos",
-          "Validação de modelos preditivos"
+          "Pré-processamento de imagens médicas",
+          "Implementar pipelines de segmentação",
+          "Avaliar métricas de performance"
         ],
-        skills: ["Machine Learning", "Image Segmentation", "Python", "Medical Imaging", "Deep Learning"],
+        skills: ["Python", "Image Processing", "Machine Learning"],
         achievements: [
-          "Implementação de pipeline de segmentação",
-          "Análise de dataset clínico",
-          "Validação cruzada de modelos"
-        ]
+          "Pipeline completo de segmentação experimental"
+        ],
+        pdfs: []
       },
       {
         id: 6,
         title: "TEC2MED",
-        role: "Departamento de Relações Externas",
-        year: 2024,
-        description: "Trabalho no departamento de relações externas e internacionais, coordenação de parcerias e projetos.",
+        role: "Relações Externas e Internacionais",
+        description: "Trabalho em relações externas, parcerias e organização de eventos.",
         carouselImage: "cardtec2med.png",
-        cover: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
+        cover: "cardtec2med.png",
         sideCards: [
-          { title: "Relações Internacionais", text: "Coordenação de parcerias com instituições internacionais." },
-          { title: "Projetos", text: "Desenvolvimento e gestão de projetos colaborativos." },
-          { title: "Comunicação", text: "Comunicação com stakeholders externos e internos." }
+          { title: "Parcerias", text: "Gestão de ligações com instituições." },
+          { title: "Eventos", text: "Apoio na organização de eventos técnicos." },
+          { title: "Comunicação", text: "Ligação com stakeholders." }
         ],
         responsibilities: [
-          "Coordenação de relações internacionais",
-          "Gestão de parcerias e acordos colaborativos",
-          "Organização de eventos e conferências",
-          "Comunicação institucional e marketing"
+          "Gerir contactos externos",
+          "Apoiar organização de eventos",
+          "Divulgar iniciativas e projetos"
         ],
-        skills: ["Relações Públicas", "Gestão de Projetos", "Comunicação", "Negociação", "Event Management"],
-        achievements: [
-          "Estabelecimento de novas parcerias internacionais",
-          "Organização de conferências e seminários",
-          "Aumento da visibilidade institucional"
-        ]
+        skills: ["Comunicação", "Organização", "Parcerias"],
+        achievements: [],
+        pdfs: []
       },
       {
         id: 7,
         title: "Patient Innovation",
         role: "Estágio com BootCamp de Inovação",
-        year: 2023,
-        description: "Participação em estágio com envolvimento em BootCamp de Inovação em Doentes 2023, conferências e eventos de investigação.",
+        description: "Participação em BootCamp e conferências ligadas à inovação em saúde.",
         carouselImage: "cardpatientinnovation.png",
-        cover: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
+        cover: "cardpatientinnovation.png",
         sideCards: [
-          { title: "BootCamp Inovação 2023", text: "Participação em BootCamp de Inovação em Doentes 2023." },
-          { title: "Conferências", text: "Conferências Estoril 2023 e Inovação em Saúde 2023." },
-          { title: "Investigação", text: "2º Encontro Anual de Investigação dos KCs NOVA SBE." }
+          { title: "BootCamp", text: "Inovação em Doentes 2023." },
+          { title: "Conferências", text: "Estoril Conferences, Inovação em Saúde." },
+          { title: "Investigação", text: "Encontro Anual KCs NOVA SBE." }
         ],
         responsibilities: [
-          "Participação ativa em BootCamp de Inovação",
-          "Apresentação de projetos e ideias",
-          "Networking com profissionais da área",
-          "Documentação e relatórios de projetos"
+          "Participar em sessões de ideação",
+          "Apresentar propostas de soluções",
+          "Realizar networking com profissionais"
         ],
-        skills: ["Inovação", "Empreendedorismo", "Networking", "Apresentação Pública", "Pesquisa Clínica"],
+        skills: ["Inovação", "Apresentação", "Networking"],
         achievements: [
-          "Poster Científico sobre envolvimento de doentes",
-          "Participação em múltiplas conferências internacionais",
-          "Networking com investigadores e médicos"
-        ]
+          "Poster científico sobre envolvimento de doentes"
+        ],
+        pdfs: []
       },
       {
         id: 8,
         title: "Nadador-Salvador",
         role: "Nadador-Salvador Profissional",
-        year: 2024,
-        description: "Trabalho como nadador-salvador em praias: Foz, Ribeira do Cavalo e Piscina do Vale do Fundão (AFSS).",
+        description: "Vigilância balnear em praias e piscinas, com foco em segurança dos banhistas.",
         carouselImage: "cardafss.png",
-        cover: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop",
+        cover: "cardafss.png",
         sideCards: [
-          { title: "Praias", text: "Praia da Foz, Ribeira do Cavalo, Vale do Fundão." },
-          { title: "Segurança", text: "Vigilância, prevenção e resgate aquático." },
-          { title: "Certificação", text: "Nadador-salvador certificado AFSS." }
+          { title: "Praias", text: "Praia da Foz e Ribeira do Cavalo." },
+          { title: "Piscina", text: "Piscina do Vale do Fundão." },
+          { title: "Segurança", text: "Prevenção e resgate aquático." }
         ],
         responsibilities: [
-          "Vigilância de praias e zonas de banho",
-          "Prevenção e resgate aquático",
-          "Aplicação de primeiros socorros",
-          "Comunicação com autoridades"
+          "Monitorizar zonas de banho",
+          "Efetuar resgates quando necessário",
+          "Aplicar primeiros socorros"
         ],
-        skills: ["Resgate Aquático", "Primeiros Socorros", "RCP", "Vigilância", "Liderança de Equipa"],
-        achievements: [
-          "Certificação de Nadador-Salvador",
-          "Múltiplas épocas de vigilância bem-sucedidas",
-          "Zero incidentes críticos"
-        ]
+        skills: ["Resgate Aquático", "Primeiros Socorros", "Trabalho em Equipa"],
+        achievements: [],
+        pdfs: []
       },
       {
         id: 9,
         title: "Tripulante Ambulância",
         role: "Tripulante de Ambulância de Socorro",
-        year: 2024,
-        description: "Trabalho como tripulante de ambulância de socorro nos Bombeiros Voluntários Sul e Sueste.",
+        description: "Atuação como tripulante de ambulância nos Bombeiros Voluntários Sul e Sueste.",
         carouselImage: "cardtas.png",
-        cover: "https://images.unsplash.com/photo-1543269865-cbf427effbad?w=600&h=400&fit=crop",
+        cover: "cardtas.png",
         sideCards: [
-          { title: "Bombeiros", text: "Bombeiros Voluntários Sul e Sueste." },
-          { title: "Emergência", text: "Resgate e transporte de emergência médica." },
-          { title: "Evento", text: "Centro Hípico Belours (AFSS) - Eventos especiais." }
+          { title: "Emergência", text: "Resgate pré-hospitalar." },
+          { title: "Eventos", text: "Cobertura de eventos e competições." },
+          { title: "Formação", text: "Atualização contínua em protocolos." }
         ],
         responsibilities: [
-          "Tripulação de ambulância de emergência",
-          "Transporte de pacientes",
-          "Assistência em eventos e competições",
-          "Manutenção de equipamentos"
+          "Apoio no transporte de doentes",
+          "Assistência pré-hospitalar básica",
+          "Colaboração com equipas médicas"
         ],
-        skills: ["Emergência Médica", "Transporte de Pacientes", "Trabalho em Equipa", "Resgate"],
-        achievements: [
-          "Voluntariado ativo em bombeiros",
-          "Participação em múltiplos eventos e resgates",
-          "Formação contínua em protocolos de emergência"
-        ]
+        skills: ["Suporte Básico de Vida", "Comunicação em Equipa"],
+        achievements: [],
+        pdfs: []
       },
       {
         id: 10,
         title: "Trabalhos / Testes",
         role: "Documentação e Projetos Académicos",
-        year: 2024,
-        description: "Compilação de trabalhos académicos, testes, projetos e documentação técnica desenvolvidos ao longo da formação.",
+        description: "Compilação de trabalhos, testes e relatórios desenvolvidos ao longo da formação.",
         carouselImage: "cardtrabalhos.png",
         cover: "cardtrabalhos.png",
         sideCards: [
-          { title: "Projetos", text: "Projetos de conclusão de unidades curriculares." },
-          { title: "Documentação", text: "Relatórios técnicos e documentação de projetos." },
-          { title: "Portfólio", text: "Compilação de trabalhos e realizações académicas." }
+          { title: "Projetos", text: "Relatórios de projetos de unidade curricular." },
+          { title: "Testes", text: "Provas escritas e práticas selecionadas." },
+          { title: "Portfólio", text: "Documentos que suportam a aprendizagem." }
         ],
         responsibilities: [
-          "Desenvolvimento de projetos académicos",
-          "Documentação técnica e relatórios",
-          "Análise de casos de estudo",
-          "Apresentação de soluções implementadas"
+          "Elaboração de relatórios técnicos",
+          "Preparação de apresentações",
+          "Documentar resultados de testes"
         ],
-        skills: ["Documentação Técnica", "Projetos Académicos", "Python", "JavaScript", "Relatórios"],
-        achievements: [
-          "Portfólio completo de projetos",
-          "Documentação profissional de trabalhos",
-          "Estudos de caso implementados"
+        skills: ["Relato Técnico", "Organização", "Ferramentas Office"],
+        achievements: [],
+        pdfs: [
+          {
+            file: "pdfs/trabalhos_ufcd.pdf",
+            titulo: "Dossier de Trabalhos UFCD",
+            subtitulo: "Conjunto de exercícios, testes e fichas de trabalho."
+          }
         ]
       },
 
-      /* -------- PLACEHOLDERS 11–34 -------- */
-      {
-        id: 11,
-        title: "Experiência 11",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 11.",
-        carouselImage: "card11.png",
-        cover: "card11.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 12,
-        title: "Experiência 12",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 12.",
-        carouselImage: "card12.png",
-        cover: "card12.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 13,
-        title: "Experiência 13",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 13.",
-        carouselImage: "card13.png",
-        cover: "card13.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 14,
-        title: "Experiência 14",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 14.",
-        carouselImage: "card14.png",
-        cover: "card14.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 15,
-        title: "Experiência 15",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 15.",
-        carouselImage: "card15.png",
-        cover: "card15.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 16,
-        title: "Experiência 16",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 16.",
-        carouselImage: "card16.png",
-        cover: "card16.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 17,
-        title: "Experiência 17",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 17.",
-        carouselImage: "card17.png",
-        cover: "card17.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 18,
-        title: "Experiência 18",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 18.",
-        carouselImage: "card18.png",
-        cover: "card18.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 19,
-        title: "Experiência 19",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 19.",
-        carouselImage: "card19.png",
-        cover: "card19.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 20,
-        title: "Experiência 20",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 20.",
-        carouselImage: "card20.png",
-        cover: "card20.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 21,
-        title: "Experiência 21",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 21.",
-        carouselImage: "card21.png",
-        cover: "card21.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 22,
-        title: "Experiência 22",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 22.",
-        carouselImage: "card22.png",
-        cover: "card22.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 23,
-        title: "Experiência 23",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 23.",
-        carouselImage: "card23.png",
-        cover: "card23.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 24,
-        title: "Experiência 24",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 24.",
-        carouselImage: "card24.png",
-        cover: "card24.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 25,
-        title: "Experiência 25",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 25.",
-        carouselImage: "card25.png",
-        cover: "card25.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 26,
-        title: "Experiência 26",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 26.",
-        carouselImage: "card26.png",
-        cover: "card26.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 27,
-        title: "Experiência 27",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 27.",
-        carouselImage: "card27.png",
-        cover: "card27.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 28,
-        title: "Experiência 28",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 28.",
-        carouselImage: "card28.png",
-        cover: "card28.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 29,
-        title: "Experiência 29",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 29.",
-        carouselImage: "card29.png",
-        cover: "card29.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 30,
-        title: "Experiência 30",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 30.",
-        carouselImage: "card30.png",
-        cover: "card30.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 31,
-        title: "Experiência 31",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 31.",
-        carouselImage: "card31.png",
-        cover: "card31.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 32,
-        title: "Experiência 32",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 32.",
-        carouselImage: "card32.png",
-        cover: "card32.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 33,
-        title: "Experiência 33",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 33.",
-        carouselImage: "card33.png",
-        cover: "card33.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      },
-      {
-        id: 34,
-        title: "Experiência 34",
-        role: "Função / Cargo",
-        year: 2024,
-        description: "Descrição da experiência 34.",
-        carouselImage: "card34.png",
-        cover: "card34.png",
-        sideCards: [
-          { title: "Ponto 1", text: "Descrição do ponto 1." },
-          { title: "Ponto 2", text: "Descrição do ponto 2." },
-          { title: "Ponto 3", text: "Descrição do ponto 3." }
-        ],
-        responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
-        skills: ["Skill 1", "Skill 2"],
-        achievements: ["Realização 1", "Realização 2"]
-      }
+      /* PLACEHOLDERS 11–34 (personaliza à vontade) */
+      ...Array.from({length: 24}, (_, i) => {
+        const id = 11 + i;
+        return {
+          id,
+          title: "Experiência " + id,
+          role: "Função / Cargo",
+          description: "Descrição da experiência " + id + ".",
+          carouselImage: "card" + id + ".png",
+          cover: "card" + id + ".png",
+          sideCards: [
+            { title: "Ponto 1", text: "Descrição do ponto 1." },
+            { title: "Ponto 2", text: "Descrição do ponto 2." },
+            { title: "Ponto 3", text: "Descrição do ponto 3." }
+          ],
+          responsibilities: ["Responsabilidade 1", "Responsabilidade 2"],
+          skills: ["Skill 1", "Skill 2"],
+          achievements: ["Realização 1", "Realização 2"],
+          pdfs: []   // aqui metes pdfs diferentes por experiência quando quiseres
+        };
+      })
     ];
 
     const carouselTrack = document.getElementById('carouselTrack');
@@ -1183,7 +499,7 @@
         wrapper.className = 'carousel-item-wrapper';
         wrapper.innerHTML = `
           <div class="carousel-item ${exp.id === 1 ? 'selected' : ''}" onclick="selectExperience(${exp.id})">
-            <img src="${exp.carouselImage}" alt="${exp.title}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22%3E%3Crect width=%22400%22 height=%22300%22 fill=%22%23444%22/%3E%3C/svg%3E'">
+            <img src="${exp.carouselImage}" alt="${exp.title}">
           </div>
           <span class="item-label">${exp.title}</span>
         `;
@@ -1193,8 +509,8 @@
 
     function renderDetails() {
       detailSection.innerHTML = experiencias.map(exp => `
-        <div class="detail-inner" id="detail-${exp.id}" style="display: ${exp.id === 1 ? 'grid' : 'none'};">
-          <img src="${exp.cover}" class="cover-image" alt="${exp.title}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 400%22%3E%3Crect width=%22600%22 height=%22400%22 fill=%22%23444%22/%3E%3C/svg%3E'">
+        <div class="detail-inner" id="detail-${exp.id}" style="display:${exp.id === 1 ? 'grid' : 'none'};">
+          <img src="${exp.cover}" class="cover-image" alt="${exp.title}">
 
           <div class="info-central">
             <h1>${exp.title}</h1>
@@ -1220,18 +536,34 @@
               <ul>
                 ${exp.responsibilities.map(r => `<li>${r}</li>`).join('')}
               </ul>
+
               <div class="skills-section">
                 <h3>🛠️ Skills</h3>
                 <div class="skills-wrap">
                   ${exp.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
                 </div>
               </div>
+
               <div class="skills-section">
                 <h3>✨ Realizações</h3>
                 <ul>
                   ${exp.achievements.map(ach => `<li>${ach}</li>`).join('')}
                 </ul>
               </div>
+
+              ${exp.pdfs && exp.pdfs.length ? `
+              <div class="pdf-list">
+                <h3>📎 PDFs relacionados</h3>
+                ${exp.pdfs.map(pdf => `
+                  <a class="pdf-item" href="${pdf.file}" target="_blank">
+                    <div class="pdf-icon">PDF</div>
+                    <div>
+                      <div class="pdf-text-main">${pdf.titulo}</div>
+                      <div class="pdf-text-sub">${pdf.subtitulo}</div>
+                    </div>
+                  </a>
+                `).join('')}
+              </div>` : ''}
             </div>
           </div>
         </div>
@@ -1241,40 +573,33 @@
     function selectExperience(id) {
       selectedId = id;
       document.querySelectorAll('.carousel-item').forEach((item, idx) => {
-        if (experiencias[idx].id === id) {
-          item.classList.add('selected');
-        } else {
-          item.classList.remove('selected');
-        }
+        if (experiencias[idx].id === id) item.classList.add('selected');
+        else item.classList.remove('selected');
       });
-
       const idx = experiencias.findIndex(e => e.id === id);
       const offset = (quadW + gap) * idx + quadW / 2;
-      carouselTrack.style.transform = `translateX(calc(50vw - 90px - ${offset}px))`;
-
-      document.querySelectorAll('.detail-inner').forEach(detail => {
-        detail.style.display = 'none';
-      });
+      carouselTrack.style.transform =
+        `translateX(calc(50vw - 90px - ${offset}px))`;
+      document.querySelectorAll('.detail-inner').forEach(d => d.style.display = 'none');
       document.getElementById(`detail-${id}`).style.display = 'grid';
       detailSection.classList.add('active');
       scrollBtn.classList.add('visible');
     }
 
     function scrollToCarousel() {
-      document.querySelector('.carousel-section').scrollIntoView({ behavior: 'smooth' });
+      document.querySelector('.carousel-section').scrollIntoView({behavior:'smooth'});
       detailSection.classList.remove('active');
       scrollBtn.classList.remove('visible');
     }
 
     document.addEventListener('keydown', e => {
       const currentIdx = experiencias.findIndex(exp => exp.id === selectedId);
-      if (e.key === 'ArrowRight' && currentIdx < experiencias.length - 1) {
+      if (e.key === 'ArrowRight' && currentIdx < experiencias.length - 1)
         selectExperience(experiencias[currentIdx + 1].id);
-      } else if (e.key === 'ArrowLeft' && currentIdx > 0) {
+      else if (e.key === 'ArrowLeft' && currentIdx > 0)
         selectExperience(experiencias[currentIdx - 1].id);
-      } else if (e.key === 'ArrowDown') {
+      else if (e.key === 'ArrowDown')
         selectExperience(selectedId);
-      }
     });
 
     renderCarousel();
