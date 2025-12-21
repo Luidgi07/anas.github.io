@@ -57,6 +57,102 @@ body {
   opacity: 0;
 }
 
+/* ===== MODAL CENTRAL (AGRADECIMENTOS / ÍNDICE) ===== */
+#infoModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9000;
+}
+#infoModalOverlay.visible {
+  display: flex;
+}
+#infoModal {
+  background: rgba(9,16,32,0.96);
+  border-radius: 18px;
+  padding: 26px 30px 22px;
+  max-width: 520px;
+  width: 90%;
+  color: #f5f7fa;
+  box-shadow: 0 18px 45px rgba(0,0,0,0.8);
+  border: 1px solid rgba(255,255,255,0.18);
+  backdrop-filter: blur(18px);
+  position: relative;
+}
+#infoModal h2 {
+  margin: 0 0 10px;
+  font-size: 1.4em;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+#infoModal p {
+  margin: 4px 0 10px;
+  font-size: 0.95em;
+  line-height: 1.5em;
+}
+#infoModal ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  font-size: 0.93em;
+}
+#infoModal ul li {
+  margin-bottom: 4px;
+}
+#infoModal .modal-buttons {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+#infoModal .modal-btn {
+  background: linear-gradient(135deg,#14aaff 60%,#75d5ff 120%);
+  border: none;
+  color: #fff;
+  padding: 7px 20px;
+  font-weight: 600;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.88em;
+}
+#infoModal .modal-btn.secondary {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.35);
+}
+
+/* ===== BOTÃO LATERAL PARA REABRIR MODAL ===== */
+#infoToggleBtn {
+  position: fixed;
+  top: 50%;
+  right: 18px;
+  transform: translateY(-50%);
+  z-index: 8000;
+  background: rgba(10,20,40,0.90);
+  color: #eaf5ff;
+  border-radius: 999px 0 0 999px;
+  border: 1px solid rgba(66,170,255,0.6);
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.78em;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.7);
+}
+#infoToggleBtn span.icon {
+  width: 8px;
+  height: 26px;
+  border-radius: 999px;
+  background: linear-gradient(180deg,#14aaff,#75d5ff);
+}
+#infoToggleBtn.hidden {
+  display: none;
+}
+
 /* ===== TOP HUD ===== */
 .top-hud {
   position: fixed;
@@ -67,7 +163,7 @@ body {
   display: flex;
   align-items: center;
   padding: 0 32px;
-  z-index: 9999;
+  z-index: 7000;
   border-bottom: 2.5px solid #42aaff;
   box-shadow: 0 2px 18px #12244477;
 }
@@ -386,7 +482,7 @@ body.gradient-fade::after { opacity: 1; }
   transform: translateY(0);
 }
 
-/* 3 colunas: imagem – texto – mini cards (removida a coluna de vídeo) */
+/* 3 colunas: imagem – texto – mini cards */
 .game-details-inner {
   width: 100%;
   max-width: 1500px;
@@ -553,7 +649,7 @@ body.gradient-fade::after { opacity: 1; }
   position:fixed;
   top:0; left:0; width:100vw; height:100vh;
   background:black; opacity:0; pointer-events:none;
-  transition:opacity .7s ease; z-index:9999;
+  transition:opacity .7s ease; z-index:6000;
 }
 </style>
 </head>
@@ -566,6 +662,31 @@ body.gradient-fade::after { opacity: 1; }
 
 <!-- OVERLAY BRANCO PARA FADE -->
 <div id="whiteOverlay" class="visible"></div>
+
+<!-- MODAL AGRADECIMENTOS / ÍNDICE -->
+<div id="infoModalOverlay">
+  <div id="infoModal">
+    <h2>OBRIGADO POR VISITAR</h2>
+    <p>Obrigado por explorares este currículo em estilo interface PS4/PS5. Aqui encontras um resumo rápido do conteúdo disponível.</p>
+    <p><strong>Índice rápido:</strong></p>
+    <ul>
+      <li><strong>Habilidades</strong> – competências técnicas e pessoais.</li>
+      <li><strong>Desporto</strong> – natação, águas abertas e salvamento.</li>
+      <li><strong>Educação</strong> – percurso académico e ensino superior.</li>
+      <li><strong>Formações</strong> – cursos e certificações adicionais.</li>
+      <li><strong>Experiências</strong> – estágios, projetos e contexto real.</li>
+    </ul>
+    <div class="modal-buttons">
+      <button class="modal-btn secondary" id="modalCloseBtn">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- BOTÃO LATERAL PARA ABRIR MODAL -->
+<button id="infoToggleBtn" class="hidden">
+  <span class="icon"></span>
+  <span>Resumo / Índice</span>
+</button>
 
 <div class="top-hud">
   <div class="hud-left">
@@ -791,7 +912,7 @@ body.gradient-fade::after { opacity: 1; }
     </div>
     <div class="side-column">
       <div class="side-card">
-        <img src="image (4).png" alt="Treino de MAr">
+        <img src="image (4).png" alt="Treino de Mar">
         <div class="text"><strong>Carta de navegação de recreio</strong><br>Carta de Patão Local.</div>
       </div>
       <div class="side-card">
@@ -1044,33 +1165,43 @@ document.getElementById('hud-experiencias-start-detail')?.addEventListener('clic
   setTimeout(() => { window.location.href = 'experiencias.html'; }, 700);
 });
 
-/* ===== LÓGICA DO VÍDEO INTRO + FADE BRANCO ===== */
+/* ===== LÓGICA DO VÍDEO INTRO + FADE BRANCO + MODAL ===== */
 const introVideo = document.getElementById('introVideo');
 const introWrapper = document.getElementById('introVideoWrapper');
 const whiteOverlay = document.getElementById('whiteOverlay');
+const infoModalOverlay = document.getElementById('infoModalOverlay');
+const infoToggleBtn = document.getElementById('infoToggleBtn');
+const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+function showModal() {
+  infoModalOverlay.classList.add('visible');
+}
+function hideModal() {
+  infoModalOverlay.classList.remove('visible');
+  infoToggleBtn.classList.remove('hidden');
+}
+
+modalCloseBtn.addEventListener('click', hideModal);
+infoToggleBtn.addEventListener('click', showModal);
 
 function startWhiteFadeSequence() {
-  // mostrar branco a 100%
   whiteOverlay.classList.add('visible');
-  // remover vídeo
   introWrapper.style.opacity = '0';
   introWrapper.style.transition = 'opacity 0.6s ease';
   setTimeout(() => {
     introWrapper.style.display = 'none';
   }, 600);
-  // esperar um pouco e depois ir desaparecendo o branco
   setTimeout(() => {
     whiteOverlay.classList.add('fade-out');
-    // quando terminar a transição, remover o overlay
     setTimeout(() => {
       whiteOverlay.style.display = 'none';
+      showModal();      // abrir modal quando o branco termina de desaparecer
+      infoToggleBtn.classList.add('hidden'); // só aparece depois de fechar uma vez
     }, 1900);
   }, 200);
 }
 
-// quando o vídeo termina
 introVideo.addEventListener('ended', startWhiteFadeSequence);
-// fallback se o vídeo não carregar / for muito curto
 setTimeout(() => {
   if (!introWrapper.style.display || introWrapper.style.display !== 'none') {
     startWhiteFadeSequence();
