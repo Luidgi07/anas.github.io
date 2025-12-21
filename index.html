@@ -1125,7 +1125,10 @@ document.getElementById('hud-start-certificados')?.addEventListener('click', e =
   genericHudLoading(e.currentTarget, 'certificados.html');
 });
 
-/* VÍDEO INTRO + FADE + MODAL RESUMO */
+// ------------ INTRO (vídeo + pop-up) com skipIntro ------------
+const urlParams = new URLSearchParams(window.location.search);
+const skipIntro = urlParams.get('skipIntro') === '1';
+
 const introVideo = document.getElementById('introVideo');
 const introWrapper = document.getElementById('introVideoWrapper');
 const whiteOverlayEl = document.getElementById('whiteOverlay');
@@ -1133,34 +1136,55 @@ const infoModalOverlayEl = document.getElementById('infoModalOverlay');
 const infoToggleBtnEl = document.getElementById('infoToggleBtn');
 const modalCloseBtnEl = document.getElementById('modalCloseBtn');
 
-function showModal() { infoModalOverlayEl.classList.add('visible'); }
-function hideModal() {
-  infoModalOverlayEl.classList.remove('visible');
-  infoToggleBtnEl.classList.remove('hidden');
+function showModal() {
+  infoModalOverlayEl?.classList.add('visible');
 }
-modalCloseBtnEl.addEventListener('click', hideModal);
-infoToggleBtnEl.addEventListener('click', showModal);
+function hideModal() {
+  infoModalOverlayEl?.classList.remove('visible');
+  infoToggleBtnEl?.classList.remove('hidden');
+}
+
+modalCloseBtnEl?.addEventListener('click', hideModal);
+infoToggleBtnEl?.addEventListener('click', showModal);
 
 function startWhiteFadeSequence() {
+  if (!whiteOverlayEl || !introWrapper) return;
+
+  // faz o flash branco e esconde o vídeo
   whiteOverlayEl.classList.add('visible');
   introWrapper.style.opacity = '0';
   introWrapper.style.transition = 'opacity 0.6s ease';
-  setTimeout(() => { introWrapper.style.display = 'none'; }, 600);
+
+  setTimeout(() => {
+    introWrapper.style.display = 'none';
+  }, 600);
+
   setTimeout(() => {
     whiteOverlayEl.classList.add('fade-out');
     setTimeout(() => {
       whiteOverlayEl.style.display = 'none';
       showModal();
-      infoToggleBtnEl.classList.add('hidden');
+      infoToggleBtnEl?.classList.add('hidden');
     }, 1900);
   }, 200);
 }
-introVideo.addEventListener('ended', startWhiteFadeSequence);
-setTimeout(() => {
-  if (!introWrapper.style.display || introWrapper.style.display !== 'none') {
-    startWhiteFadeSequence();
-  }
-}, 15000);
+
+// Se vier de outra página com ?skipIntro=1, não mostra vídeo nem pop-up
+if (skipIntro) {
+  if (introWrapper) introWrapper.style.display = 'none';
+  if (whiteOverlayEl) whiteOverlayEl.style.display = 'none';
+  // não chamamos startWhiteFadeSequence nem showModal
+} else {
+  // fluxo normal: vídeo toca e ao terminar aparece o modal
+  introVideo?.addEventListener('ended', startWhiteFadeSequence);
+
+  // fallback: se o vídeo não terminar (erro, user bloqueia, etc.), força a sequência ao fim de 15s
+  setTimeout(() => {
+    if (introWrapper && introWrapper.style.display !== 'none') {
+      startWhiteFadeSequence();
+    }
+  }, 15000);
+}
 
 /* MODAL BIBLIOGRAFIA */
 const biblioModalOverlayEl = document.getElementById('biblioModalOverlay');
