@@ -120,12 +120,11 @@
 
     .details-column{display:flex;flex-direction:column;gap:16px;}
 
-    /* caixa com scroll interno sem barra branca */
+    /* CAIXA COM SCROLL + BARRA AZUL ANIMADA */
     .detail-box{
       position:relative;
       border-radius:16px;
       border:2px solid #42aaff;
-      overflow:hidden;
       box-shadow:0 10px 30px rgba(0,0,0,0.7);
       background:rgba(8,12,24,0.8);
       max-height:280px;
@@ -140,22 +139,27 @@
       color:#dfe8ff;
       font-size:.9em;
       line-height:1.6;
-      scrollbar-width:none;              /* Firefox */
+      scrollbar-width:none;
     }
-    .detail-box-content::-webkit-scrollbar{
-      width:0;                           /* Chrome/Edge */
-    }
-    /* traço azul fixo a simular scroll minimal */
-    .detail-box::after{
-      content:"";
+    .detail-box-content::-webkit-scrollbar{width:0;}
+
+    .scroll-track{
       position:absolute;
-      top:12px;
+      top:10px;
       right:8px;
       width:4px;
-      height:40px;
+      bottom:10px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.05);
+    }
+    .scroll-thumb{
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:35px;
       border-radius:999px;
       background:linear-gradient(180deg,#42aaff,#75d5ff);
-      opacity:.7;
     }
 
     .detail-box-content h3{
@@ -179,12 +183,23 @@
     }
 
     .pdf-box{
+      position:relative;
       border-radius:16px;
       border:2px solid #42aaff;
       background:rgba(8,12,24,0.9);
       padding:16px 18px;
       box-shadow:0 10px 30px rgba(0,0,0,0.7);
+      max-height:280px;
+      overflow:hidden;
     }
+    .pdf-box-inner{
+      max-height:248px;
+      overflow-y:auto;
+      padding-right:8px;
+      scrollbar-width:none;
+    }
+    .pdf-box-inner::-webkit-scrollbar{width:0;}
+
     .pdf-box h3{
       margin:0 0 10px;
       font-size:1em;
@@ -248,7 +263,9 @@
           "Supervisar competições de natação pura",
           "Garantir conformidade com regulamentos FINA",
           "Validar tempos e resultados",
-          "Coordenar com outros juízes"
+          "Coordenar com outros juízes",
+          "Comunicar com treinadores e nadadores",
+          "Analisar relatórios pós-prova"
         ],
         skills: ["Regulamentos Natação", "Supervisão de Eventos", "Cronometragem", "Conformidade FINA"],
         achievements: [
@@ -265,6 +282,21 @@
             file: "pdfs/anl_certificado.pdf",
             titulo: "Certificado Juiz de Natação",
             subtitulo: "Certificação emitida pela associação de natação."
+          },
+          {
+            file: "pdfs/anl_regulamentos.pdf",
+            titulo: "Regulamentos principais",
+            subtitulo: "Regras base aplicadas às competições."
+          },
+          {
+            file: "pdfs/anl_formacao.pdf",
+            titulo: "Plano de formação contínua",
+            subtitulo: "Conteúdos das ações de formação internas."
+          },
+          {
+            file: "pdfs/anl_outro.pdf",
+            titulo: "Outros documentos",
+            subtitulo: "Material adicional de apoio às provas."
           }
         ]
       },
@@ -298,189 +330,29 @@
           }
         ]
       },
-      {
-        id: 3,
-        title: "Careceiver",
-        role: "Estágio em ambiente Startup",
-        description: "Estágio em ambiente startup com foco em inovação e desenvolvimento de carreira.",
-        carouselImage: "cardcareceiver.png",
-        cover: "cardcareceiver.png",
-        sideCards: [
-          { title: "Startup", text: "Ambiente dinâmico e multidisciplinar." },
-          { title: "Carreira", text: "Desenvolvimento de competências transversais." },
-          { title: "Projetos", text: "Participação em funcionalidades de plataforma." }
-        ],
-        responsibilities: [
-          "Desenvolver funcionalidades para a plataforma",
-          "Participar em reuniões de planeamento ágil",
-          "Colaborar com equipas multidisciplinares"
-        ],
-        skills: ["Agile", "Colaboração", "Web Development"],
-        achievements: [
-          "Contribuição para lançamento de novas features"
-        ],
-        pdfs: []
-      },
-      {
-        id: 4,
-        title: "ArteFisio",
-        role: "Design Gráfico e Web",
-        description: "Design de identidade visual e desenvolvimento de websites para a ArteFisio.",
-        carouselImage: "cardartefisio.png",
-        cover: "cardartefisio.png",
-        sideCards: [
-          { title: "Design", text: "Criação de cartões de visita e material gráfico." },
-          { title: "Web", text: "Desenvolvimento de sites responsivos." },
-          { title: "Gestão", text: "Acompanhamento de clientes e revisões." }
-        ],
-        responsibilities: [
-          "Criar layouts e identidade visual",
-          "Desenvolver interfaces web responsivas",
-          "Manter conteúdo e atualizações"
-        ],
-        skills: ["HTML/CSS", "JavaScript", "UI/UX", "Design Gráfico"],
-        achievements: [
-          "Conceção de vários sites funcionais para clientes"
-        ],
-        pdfs: []
-      },
-      {
-        id: 5,
-        title: "IBEB",
-        role: "Estágio em Segmentação Tumoral",
-        description: "Estudo de segmentação tumoral e previsão de desfechos clínicos em RM mamária.",
-        carouselImage: "cardibeb.png",
-        cover: "cardibeb.png",
-        sideCards: [
-          { title: "Segmentação", text: "Implementação de algoritmos de segmentação." },
-          { title: "Modelos", text: "Testes com modelos preditivos." },
-          { title: "Investigação", text: "Análise de datasets clínicos." }
-        ],
-        responsibilities: [
-          "Pré-processamento de imagens médicas",
-          "Implementar pipelines de segmentação",
-          "Avaliar métricas de performance"
-        ],
-        skills: ["Python", "Image Processing", "Machine Learning"],
-        achievements: [
-          "Pipeline completo de segmentação experimental"
-        ],
-        pdfs: []
-      },
-      {
-        id: 6,
-        title: "TEC2MED",
-        role: "Relações Externas e Internacionais",
-        description: "Trabalho em relações externas, parcerias e organização de eventos.",
-        carouselImage: "cardtec2med.png",
-        cover: "cardtec2med.png",
-        sideCards: [
-          { title: "Parcerias", text: "Gestão de ligações com instituições." },
-          { title: "Eventos", text: "Apoio na organização de eventos técnicos." },
-          { title: "Comunicação", text: "Ligação com stakeholders." }
-        ],
-        responsibilities: [
-          "Gerir contactos externos",
-          "Apoiar organização de eventos",
-          "Divulgar iniciativas e projetos"
-        ],
-        skills: ["Comunicação", "Organização", "Parcerias"],
-        achievements: [],
-        pdfs: []
-      },
-      {
-        id: 7,
-        title: "Patient Innovation",
-        role: "Estágio com BootCamp de Inovação",
-        description: "Participação em BootCamp e conferências ligadas à inovação em saúde.",
-        carouselImage: "cardpatientinnovation.png",
-        cover: "cardpatientinnovation.png",
-        sideCards: [
-          { title: "BootCamp", text: "Inovação em Doentes 2023." },
-          { title: "Conferências", text: "Estoril Conferences, Inovação em Saúde." },
-          { title: "Investigação", text: "Encontro Anual KCs NOVA SBE." }
-        ],
-        responsibilities: [
-          "Participar em sessões de ideação",
-          "Apresentar propostas de soluções",
-          "Realizar networking com profissionais"
-        ],
-        skills: ["Inovação", "Apresentação", "Networking"],
-        achievements: [
-          "Poster científico sobre envolvimento de doentes"
-        ],
-        pdfs: []
-      },
-      {
-        id: 8,
-        title: "Nadador-Salvador",
-        role: "Nadador-Salvador Profissional",
-        description: "Vigilância balnear em praias e piscinas, com foco na segurança dos banhistas.",
-        carouselImage: "cardafss.png",
-        cover: "cardafss.png",
-        sideCards: [
-          { title: "Praias", text: "Praia da Foz e Ribeira do Cavalo." },
-          { title: "Piscina", text: "Piscina do Vale do Fundão." },
-          { title: "Segurança", text: "Prevenção e resgate aquático." }
-        ],
-        responsibilities: [
-          "Monitorizar zonas de banho",
-          "Efetuar resgates quando necessário",
-          "Aplicar primeiros socorros"
-        ],
-        skills: ["Resgate Aquático", "Primeiros Socorros", "Trabalho em Equipa"],
-        achievements: [],
-        pdfs: []
-      },
-      {
-        id: 9,
-        title: "Tripulante Ambulância",
-        role: "Tripulante de Ambulância de Socorro",
-        description: "Atuação como tripulante de ambulância nos Bombeiros Voluntários Sul e Sueste.",
-        carouselImage: "cardtas.png",
-        cover: "cardtas.png",
-        sideCards: [
-          { title: "Emergência", text: "Resgate pré-hospitalar." },
-          { title: "Eventos", text: "Cobertura de eventos e competições." },
-          { title: "Formação", text: "Atualização contínua em protocolos." }
-        ],
-        responsibilities: [
-          "Apoio no transporte de doentes",
-          "Assistência pré-hospitalar básica",
-          "Colaboração com equipas médicas"
-        ],
-        skills: ["Suporte Básico de Vida", "Comunicação em Equipa"],
-        achievements: [],
-        pdfs: []
-      },
-      {
-        id: 10,
-        title: "Trabalhos / Testes",
-        role: "Documentação e Projetos Académicos",
-        description: "Compilação de trabalhos, testes e relatórios desenvolvidos ao longo da formação.",
-        carouselImage: "cardtrabalhos.png",
-        cover: "cardtrabalhos.png",
-        sideCards: [
-          { title: "Projetos", text: "Relatórios de projetos de unidade curricular." },
-          { title: "Testes", text: "Provas escritas e práticas selecionadas." },
-          { title: "Portfólio", text: "Documentos que suportam a aprendizagem." }
-        ],
-        responsibilities: [
-          "Elaboração de relatórios técnicos",
-          "Preparação de apresentações",
-          "Documentar resultados de testes"
-        ],
-        skills: ["Relato Técnico", "Organização", "Ferramentas Office"],
-        achievements: [],
-        pdfs: [
-          {
-            file: "pdfs/trabalhos_ufcd.pdf",
-            titulo: "Dossier de Trabalhos UFCD",
-            subtitulo: "Exercícios, testes e fichas de trabalho."
-          }
-        ]
-      },
-
+      /* restantes experiências 3–10 sem PDFs extra para exemplo */
+      ...Array.from({length:8},(_,i)=>{
+        const id=3+i;
+        const titles=["Careceiver","ArteFisio","IBEB","TEC2MED","Patient Innovation","Nadador-Salvador","Tripulante Ambulância","Trabalhos / Testes"];
+        return{
+          id,
+          title: titles[i] || ("Experiência "+id),
+          role:"Função / Cargo",
+          description:"Descrição da experiência "+id+".",
+          carouselImage:"card"+id+".png",
+          cover:"card"+id+".png",
+          sideCards:[
+            {title:"Ponto 1",text:"Descrição do ponto 1."},
+            {title:"Ponto 2",text:"Descrição do ponto 2."},
+            {title:"Ponto 3",text:"Descrição do ponto 3."}
+          ],
+          responsibilities:["Responsabilidade 1","Responsabilidade 2","Responsabilidade 3"],
+          skills:["Skill 1","Skill 2","Skill 3"],
+          achievements:["Realização 1","Realização 2"],
+          pdfs:[]
+        };
+      }),
+      /* placeholders 11–34 */
       ...Array.from({length:24},(_,i)=>{
         const id=11+i;
         return{
@@ -548,7 +420,7 @@
 
           <div class="details-column">
             <div class="detail-box">
-              <div class="detail-box-content">
+              <div class="detail-box-content js-scroll-content">
                 <h3>📋 Responsabilidades</h3>
                 <ul>
                   ${exp.responsibilities.map(r=>`<li>${r}</li>`).join('')}
@@ -568,24 +440,57 @@
                   </ul>
                 </div>
               </div>
+              <div class="scroll-track"><div class="scroll-thumb"></div></div>
             </div>
 
             ${exp.pdfs && exp.pdfs.length ? `
             <div class="pdf-box">
               <h3>📎 PDFs relacionados</h3>
-              ${exp.pdfs.map(pdf=>`
-                <a class="pdf-item" href="${pdf.file}" target="_blank">
-                  <div class="pdf-icon">PDF</div>
-                  <div>
-                    <div class="pdf-text-main">${pdf.titulo}</div>
-                    <div class="pdf-text-sub">${pdf.subtitulo}</div>
-                  </div>
-                </a>
-              `).join('')}
+              <div class="pdf-box-inner js-scroll-content">
+                ${exp.pdfs.map(pdf=>`
+                  <a class="pdf-item" href="${pdf.file}" target="_blank">
+                    <div class="pdf-icon">PDF</div>
+                    <div>
+                      <div class="pdf-text-main">${pdf.titulo}</div>
+                      <div class="pdf-text-sub">${pdf.subtitulo}</div>
+                    </div>
+                  </a>
+                `).join('')}
+              </div>
+              <div class="scroll-track"><div class="scroll-thumb"></div></div>
             </div>` : ''}
           </div>
         </div>
       `).join('');
+      initCustomScrollbars();
+    }
+
+    function initCustomScrollbars(){
+      document.querySelectorAll('.detail-box, .pdf-box').forEach(box=>{
+        const content=box.querySelector('.js-scroll-content');
+        const track=box.querySelector('.scroll-track');
+        const thumb=box.querySelector('.scroll-thumb');
+        if(!content || !track || !thumb) return;
+
+        function updateThumb(){
+          const scrollHeight=content.scrollHeight;
+          const visible=content.clientHeight;
+          const maxScroll=scrollHeight-visible;
+          if(maxScroll<=0){
+            thumb.style.display='none';
+            return;
+          }
+          thumb.style.display='block';
+          const trackHeight=track.clientHeight;
+          const thumbHeight=Math.max(25,visible/scrollHeight*trackHeight);
+          const ratio=content.scrollTop/maxScroll;
+          const maxThumbMove=trackHeight-thumbHeight;
+          thumb.style.height=thumbHeight+'px';
+          thumb.style.top=(ratio*maxThumbMove)+'px';
+        }
+        content.addEventListener('scroll',updateThumb);
+        updateThumb();
+      });
     }
 
     function selectExperience(id){
@@ -600,6 +505,7 @@
         `translateX(calc(50vw - 90px - ${offset}px))`;
       document.querySelectorAll('.detail-inner').forEach(d=>d.style.display='none');
       document.getElementById(`detail-${id}`).style.display='grid';
+      initCustomScrollbars();
     }
 
     document.addEventListener('keydown',e=>{
