@@ -125,13 +125,14 @@ body {
 /* ===== BOTÃO LATERAL PARA REABRIR MODAL ===== */
 #infoToggleBtn {
   position: fixed;
-  top: 50%;
-  right: 18px;
-  transform: translateY(-50%);
+  top: 90px;          /* mais acima: ajusta este valor como quiseres */
+  left: 32px;         /* passa para a esquerda */
+  right: auto;        /* garante que o right não interfere */
+  transform: none;    /* já não precisamos do translateY */
   z-index: 8000;
   background: rgba(10,20,40,0.90);
   color: #eaf5ff;
-  border-radius: 999px 0 0 999px;
+  border-radius: 0 999px 999px 0;
   border: 1px solid rgba(66,170,255,0.6);
   padding: 8px 14px;
   display: flex;
