@@ -40,7 +40,7 @@ body {
   object-fit: cover;
 }
 
-/* ===== OVERLAY BRANCO QUE DESVANECE ===== */
+/* ===== OVERLAY BRANCO ===== */
 #whiteOverlay {
   position: fixed;
   inset: 0;
@@ -50,14 +50,10 @@ body {
   pointer-events: none;
   transition: opacity 1.8s ease;
 }
-#whiteOverlay.visible {
-  opacity: 1;
-}
-#whiteOverlay.fade-out {
-  opacity: 0;
-}
+#whiteOverlay.visible { opacity: 1; }
+#whiteOverlay.fade-out { opacity: 0; }
 
-/* ===== MODAL CENTRAL (AGRADECIMENTOS / ÍNDICE) ===== */
+/* ===== MODAL CENTRAL (RESUMO / ÍNDICE) ===== */
 #infoModalOverlay {
   position: fixed;
   inset: 0;
@@ -67,9 +63,7 @@ body {
   justify-content: center;
   z-index: 9000;
 }
-#infoModalOverlay.visible {
-  display: flex;
-}
+#infoModalOverlay.visible { display: flex; }
 #infoModal {
   background: rgba(9,16,32,0.96);
   border-radius: 18px;
@@ -98,9 +92,7 @@ body {
   padding-left: 18px;
   font-size: 0.93em;
 }
-#infoModal ul li {
-  margin-bottom: 4px;
-}
+#infoModal ul li { margin-bottom: 4px; }
 #infoModal .modal-buttons {
   margin-top: 16px;
   display: flex;
@@ -122,10 +114,10 @@ body {
   border: 1px solid rgba(255,255,255,0.35);
 }
 
-/* ===== BOTÃO LATERAL RESUMO / ÍNDICE (TOP LEFT) ===== */
-#infoToggleBtn {
+/* ===== BOTÕES LATERAIS TOPO ESQ ===== */
+#infoToggleBtn,
+#biblioToggleBtn {
   position: fixed;
-  top: 90px;
   left: 32px;
   z-index: 8000;
   background: rgba(10,20,40,0.90);
@@ -142,6 +134,8 @@ body {
   text-transform: uppercase;
   box-shadow: 0 6px 16px rgba(0,0,0,0.7);
 }
+#infoToggleBtn { top: 90px; }
+#biblioToggleBtn { top: 130px; } /* logo por baixo */
 #infoToggleBtn span.icon,
 #biblioToggleBtn span.icon {
   width: 8px;
@@ -149,30 +143,7 @@ body {
   border-radius: 999px;
   background: linear-gradient(180deg,#14aaff,#75d5ff);
 }
-#infoToggleBtn.hidden {
-  display: none;
-}
-
-/* ===== BOTÃO BIBLIOGRAFIA (BOTTOM LEFT) ===== */
-#biblioToggleBtn {
-  position: fixed;
-  bottom: 28px;
-  left: 32px;
-  z-index: 8000;
-  background: rgba(10,20,40,0.90);
-  color: #eaf5ff;
-  border-radius: 0 999px 999px 0;
-  border: 1px solid rgba(66,170,255,0.6);
-  padding: 8px 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  font-size: 0.78em;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.7);
-}
+#infoToggleBtn.hidden { display: none; }
 
 /* ===== MODAL BIBLIOGRAFIA ===== */
 #biblioModalOverlay {
@@ -184,9 +155,7 @@ body {
   justify-content: center;
   z-index: 9000;
 }
-#biblioModalOverlay.visible {
-  display: flex;
-}
+#biblioModalOverlay.visible { display: flex; }
 #biblioModal {
   background: rgba(9,16,32,0.96);
   border-radius: 18px;
@@ -225,7 +194,7 @@ body {
   font-size: 0.88em;
 }
 
-/* ===== TOP HUD (SEM ÍCONES EXTRA) ===== */
+/* ===== TOP HUD (SEM ÍCONES) ===== */
 .top-hud {
   position: fixed;
   top: 0; left: 0;
@@ -243,7 +212,6 @@ body {
   display: flex; align-items: center; gap: 18px;
 }
 .hud-center { margin-left: auto; margin-right: 80px; }
-
 .hud-time-date {
   color: #e9f5fa;
   font-size: 1.07em;
@@ -435,7 +403,7 @@ body.gradient-fade::after { opacity: 1; }
   50%     { transform: translateY(5px); }
 }
 
-/* CD para todos os títulos com secção */
+/* CD animação */
 .cd-label-wrap {
   display: inline-flex;
   align-items: center;
@@ -490,7 +458,7 @@ body.gradient-fade::after { opacity: 1; }
   stroke: #1da1f2;
 }
 
-/* ===== HUB EM BAIXO (SEM VÍDEO) ===== */
+/* ===== HUB EM BAIXO (GENÉRICO) ===== */
 .game-details {
   position: fixed;
   left: 0; bottom: 0;
@@ -512,7 +480,7 @@ body.gradient-fade::after { opacity: 1; }
   transform: translateY(0);
 }
 
-/* 3 colunas: imagem – texto – mini cards */
+/* layout conteúdo hub */
 .game-details-inner {
   width: 100%;
   max-width: 1500px;
@@ -521,8 +489,6 @@ body.gradient-fade::after { opacity: 1; }
   gap: 26px;
   align-items: start;
 }
-
-/* imagem principal */
 .cover-main {
   width: 100%;
   height: 210px;
@@ -530,8 +496,6 @@ body.gradient-fade::after { opacity: 1; }
   border: 2px solid #42aaff;
   object-fit: cover;
 }
-
-/* texto central */
 .game-details .info {
   color: #f5f7fa;
   display: flex;
@@ -569,8 +533,6 @@ body.gradient-fade::after { opacity: 1; }
   border-radius: 999px;
   cursor: pointer;
 }
-
-/* coluna direita – mini “activities” */
 .side-column {
   display: flex;
   flex-direction: column;
@@ -630,7 +592,7 @@ body.gradient-fade::after { opacity: 1; }
   font-size: 0.78em;
 }
 
-/* ===== RESPONSIVE HUB ===== */
+/* ===== RESPONSIVE ===== */
 @media (max-width: 1200px) {
   .game-details {
     padding: 28px 32px 40px;
@@ -639,23 +601,13 @@ body.gradient-fade::after { opacity: 1; }
     max-width: 100%;
     grid-template-columns: 260px 1fr 260px;
   }
-  .side-column {
-    gap: 6px;
-  }
-  .cover-main {
-    height: 180px;
-  }
+  .side-column { gap: 6px; }
+  .cover-main { height: 180px; }
 }
 @media (max-width: 900px) {
-  .ps4-dashboard {
-    padding-left: 20px;
-  }
-  .carousel-inner {
-    gap: 22px;
-  }
-  .game-details-inner {
-    grid-template-columns: 1fr;
-  }
+  .ps4-dashboard { padding-left: 20px; }
+  .carousel-inner { gap: 22px; }
+  .game-details-inner { grid-template-columns: 1fr; }
 }
 
 /* ===== LOADING HUD ===== */
@@ -674,7 +626,7 @@ body.gradient-fade::after { opacity: 1; }
   transition: width .2s linear;
 }
 
-/* ===== SCREEN FADE PREEXISTENTE ===== */
+/* ===== SCREEN FADE ===== */
 #screen-fade {
   position:fixed;
   top:0; left:0; width:100vw; height:100vh;
@@ -685,15 +637,14 @@ body.gradient-fade::after { opacity: 1; }
 </head>
 <body>
 
-<!-- VÍDEO INTRO INICIAL -->
+<!-- VÍDEO INTRO -->
 <div id="introVideoWrapper">
   <video id="introVideo" src="video (2).mp4" autoplay muted playsinline></video>
 </div>
 
-<!-- OVERLAY BRANCO PARA FADE -->
 <div id="whiteOverlay" class="visible"></div>
 
-<!-- MODAL AGRADECIMENTOS / ÍNDICE -->
+<!-- MODAL RESUMO / ÍNDICE -->
 <div id="infoModalOverlay">
   <div id="infoModal">
     <h2>OBRIGADO POR VISITAR</h2>
@@ -703,7 +654,7 @@ body.gradient-fade::after { opacity: 1; }
       <li><strong>Documentação</strong> – visão geral do projeto e contexto.</li>
       <li><strong>Autobiografia</strong> – percurso pessoal e motivação.</li>
       <li><strong>UFCD</strong> – evidências da unidade de formação.</li>
-      <li><strong>Estágio</strong> – atividades e aprendizagens em contexto real.</li>
+      <li><strong>Estágio</strong> – atividades e aprendizagens.</li>
       <li><strong>Última Reflexão</strong> – síntese crítica do percurso.</li>
       <li><strong>Certificados</strong> – provas formais de competências.</li>
     </ul>
@@ -717,26 +668,25 @@ body.gradient-fade::after { opacity: 1; }
 <div id="biblioModalOverlay">
   <div id="biblioModal">
     <h2>BIBLIOGRAFIA</h2>
-    <p>Aqui podes listar as principais referências bibliográficas utilizadas na construção deste portefólio e dos respetivos conteúdos.</p>
-    <p>Podes organizar por norma APA, Vancouver ou outra que esteja a ser utilizada na unidade curricular.</p>
+    <p>Espaço para listagem das referências bibliográficas usadas nos conteúdos deste portefólio.</p>
     <div class="modal-buttons">
       <button class="modal-btn" id="biblioCloseBtn">Fechar</button>
     </div>
   </div>
 </div>
 
-<!-- BOTÃO LATERAL RESUMO / ÍNDICE -->
+<!-- BOTÕES LATERAIS TOPO ESQ -->
 <button id="infoToggleBtn" class="hidden">
   <span class="icon"></span>
   <span>Resumo / Índice</span>
 </button>
 
-<!-- BOTÃO BIBLIOGRAFIA -->
 <button id="biblioToggleBtn">
   <span class="icon"></span>
   <span>Bibliografia</span>
 </button>
 
+<!-- HUD TOPO -->
 <div class="top-hud">
   <div class="hud-left">
     <span class="hud-time-date" id="hudTimeDate"></span>
@@ -750,6 +700,7 @@ body.gradient-fade::after { opacity: 1; }
   <div class="hud-right"></div>
 </div>
 
+<!-- DASHBOARD -->
 <div class="dashboard-container" id="dashCont">
   <div class="ps4-dashboard">
     <div class="carousel-inner" id="carousel">
@@ -836,13 +787,12 @@ body.gradient-fade::after { opacity: 1; }
   </div>
 </div>
 
-<!-- Para já não definimos hubs individuais; se quiseres, podem ser adaptados depois -->
+<!-- Hubs vazios para manter lógica (podem ser preenchidos depois) -->
 <div class="game-details" id="gameDetails-1"></div>
 <div class="game-details" id="gameDetails-2"></div>
 <div class="game-details" id="gameDetails-3"></div>
 <div class="game-details" id="gameDetails-4"></div>
 
-<!-- Hint UX -->
 <div id="hubHint" class="hub-hint">
   <span>Carrega</span>
   <span class="key">START</span>
@@ -895,9 +845,7 @@ function clearWallpapers() {
     'bg-dynamic','gradient-fade','hub-open'
   );
 }
-function hideHint() {
-  hubHint.classList.remove('visible');
-}
+function hideHint() { hubHint.classList.remove('visible'); }
 function showHintOnce() {
   if (hintShown) return;
   hintShown = true;
@@ -1006,7 +954,7 @@ function genericHudLoading(button, url) {
   }, frameDuration);
 }
 
-/* START buttons para as novas páginas */
+/* START buttons */
 document.getElementById('hud-start-documentacao')?.addEventListener('click', e => {
   e.preventDefault();
   genericHudLoading(e.currentTarget, 'documentacao.html');
@@ -1032,7 +980,7 @@ document.getElementById('hud-start-certificados')?.addEventListener('click', e =
   genericHudLoading(e.currentTarget, 'certificados.html');
 });
 
-/* ===== LÓGICA DO VÍDEO INTRO + FADE BRANCO + MODAL ===== */
+/* VÍDEO INTRO + FADE + MODAL RESUMO */
 const introVideo = document.getElementById('introVideo');
 const introWrapper = document.getElementById('introVideoWrapper');
 const whiteOverlay = document.getElementById('whiteOverlay');
@@ -1040,14 +988,11 @@ const infoModalOverlay = document.getElementById('infoModalOverlay');
 const infoToggleBtn = document.getElementById('infoToggleBtn');
 const modalCloseBtn = document.getElementById('modalCloseBtn');
 
-function showModal() {
-  infoModalOverlay.classList.add('visible');
-}
+function showModal() { infoModalOverlay.classList.add('visible'); }
 function hideModal() {
   infoModalOverlay.classList.remove('visible');
   infoToggleBtn.classList.remove('hidden');
 }
-
 modalCloseBtn.addEventListener('click', hideModal);
 infoToggleBtn.addEventListener('click', showModal);
 
@@ -1055,9 +1000,7 @@ function startWhiteFadeSequence() {
   whiteOverlay.classList.add('visible');
   introWrapper.style.opacity = '0';
   introWrapper.style.transition = 'opacity 0.6s ease';
-  setTimeout(() => {
-    introWrapper.style.display = 'none';
-  }, 600);
+  setTimeout(() => { introWrapper.style.display = 'none'; }, 600);
   setTimeout(() => {
     whiteOverlay.classList.add('fade-out');
     setTimeout(() => {
@@ -1067,7 +1010,6 @@ function startWhiteFadeSequence() {
     }, 1900);
   }, 200);
 }
-
 introVideo.addEventListener('ended', startWhiteFadeSequence);
 setTimeout(() => {
   if (!introWrapper.style.display || introWrapper.style.display !== 'none') {
@@ -1075,17 +1017,12 @@ setTimeout(() => {
   }
 }, 15000);
 
-/* ===== MODAL BIBLIOGRAFIA ===== */
+/* MODAL BIBLIOGRAFIA */
 const biblioModalOverlay = document.getElementById('biblioModalOverlay');
 const biblioToggleBtn = document.getElementById('biblioToggleBtn');
 const biblioCloseBtn = document.getElementById('biblioCloseBtn');
-
-function showBiblioModal() {
-  biblioModalOverlay.classList.add('visible');
-}
-function hideBiblioModal() {
-  biblioModalOverlay.classList.remove('visible');
-}
+function showBiblioModal() { biblioModalOverlay.classList.add('visible'); }
+function hideBiblioModal() { biblioModalOverlay.classList.remove('visible'); }
 biblioToggleBtn.addEventListener('click', showBiblioModal);
 biblioCloseBtn.addEventListener('click', hideBiblioModal);
 </script>
