@@ -962,6 +962,12 @@ setInterval(updateHudTime,1000);
 updateHudTime();
 
 const carousel = document.getElementById('carousel');
+  carousel.addEventListener('wheel', (event) => {
+  event.preventDefault();                // impede o scroll padrão
+  const factor = 0.50;                   // < 1 abranda, > 1 acelera
+  carousel.scrollLeft += event.deltaY * factor;
+}, { passive: false });
+
 const allItems = carousel.querySelectorAll('.menu-item');
 const hudRows = document.querySelectorAll('.hud-row');
 const hudTitles = carousel.querySelectorAll('.hud-title');
