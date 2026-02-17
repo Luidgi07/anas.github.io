@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Certificados</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -13,10 +14,10 @@
     }
 
     header {
-      background: #333;
+      background: #111;
       color: #fff;
       text-align: center;
-      padding: 1.2em 0;
+      padding: 1.5em 0;
     }
 
     header h1 {
@@ -25,7 +26,7 @@
     }
 
     .container {
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 2em auto;
       padding: 0 1em;
     }
@@ -38,14 +39,15 @@
 
     .certificate-card {
       background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
       overflow: hidden;
-      transition: transform .2s ease;
+      transition: transform .3s ease, box-shadow .3s ease;
     }
 
     .certificate-card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
 
     .cert-img {
@@ -61,62 +63,70 @@
 
     .cert-info h3 {
       margin: .5em 0;
-      font-size: 1.2em;
+      font-size: 1.1em;
     }
 
     .btn-view {
       display: inline-block;
-      margin-top: .5em;
-      padding: .5em 1.2em;
+      margin-top: .7em;
+      padding: .6em 1.4em;
       background: #0077ff;
       color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
+      border-radius: 5px;
       text-decoration: none;
       font-size: .95em;
+      transition: background .3s ease;
     }
 
     .btn-view:hover {
       background: #005fd1;
     }
+
+    footer {
+      text-align: center;
+      padding: 2em 0;
+      color: #777;
+      font-size: 0.9em;
+    }
   </style>
 </head>
+
 <body>
 
 <header>
   <h1>Meus Certificados</h1>
-  <p>Visualiza os certificados que conquistei 👇</p>
+  <p>Clica em "Ver Certificado" para abrir o PDF</p>
 </header>
 
 <div class="container">
-  <div class="cert-grid" id="certGrid">
-    <!-- Certificados serão adicionados aqui via JS -->
-  </div>
+  <div class="cert-grid" id="certGrid"></div>
 </div>
 
+<footer>
+  © 2026 - Todos os direitos reservados
+</footer>
+
 <script>
-  // 🧾 Lista de Certificados
   const certificates = [
     {
       title: "Certificado de HTML5",
-      img: "https://via.placeholder.com/400x300.png?text=HTML5+Certificate",
-      link: "https://example.com/html5"
+      img: "preview/html.jpg",
+      file: "certificados/html.pdf"
     },
     {
       title: "Certificado de CSS3",
-      img: "https://via.placeholder.com/400x300.png?text=CSS3+Certificate",
-      link: "https://example.com/css3"
+      img: "preview/css.jpg",
+      file: "certificados/css.pdf"
     },
     {
       title: "JavaScript Avançado",
-      img: "https://via.placeholder.com/400x300.png?text=JavaScript+Avancado",
-      link: "https://example.com/js"
+      img: "preview/javascript.jpg",
+      file: "certificados/javascript.pdf"
     },
     {
       title: "React Developer",
-      img: "https://via.placeholder.com/400x300.png?text=React+Developer",
-      link: "https://example.com/react"
+      img: "preview/react.jpg",
+      file: "certificados/react.pdf"
     }
   ];
 
@@ -130,7 +140,9 @@
       <img class="cert-img" src="${cert.img}" alt="${cert.title}">
       <div class="cert-info">
         <h3>${cert.title}</h3>
-        <a class="btn-view" href="${cert.link}" target="_blank">Ver Certificado</a>
+        <a class="btn-view" href="${cert.file}" target="_blank">
+          Ver Certificado
+        </a>
       </div>
     `;
 
