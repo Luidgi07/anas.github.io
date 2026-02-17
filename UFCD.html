@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UFCD Ana Silva</title>
+  <title>UFCD Ana Silva C</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
     html,body{
@@ -1210,64 +1210,70 @@
 
     function initCustomScrollbars(){
       document.querySelectorAll('.detail-box, .pdf-box').forEach(box=>{
-        const content=box.querySelector('.js-scroll-content');
-        const track=box.querySelector('.scroll-track');
-        const thumb=box.querySelector('.scroll-thumb');
+        const content = box.querySelector('.js-scroll-content');
+        const track = box.querySelector('.scroll-track');
+        const thumb = box.querySelector('.scroll-thumb');
         if(!content || !track || !thumb) return;
-
+    
         function updateThumb(){
-          const scrollHeight=content.scrollHeight;
-          const visible=content.clientHeight;
-          const maxScroll=scrollHeight-visible;
-          if(maxScroll<=0){
-            thumb.style.display='none';
+          const scrollHeight = content.scrollHeight;
+          const visible = content.clientHeight;
+          const maxScroll = scrollHeight - visible;
+    
+          if(maxScroll <= 0){
+            thumb.style.display = 'none';
             return;
           }
-          thumb.style.display='block';
-          const trackHeight=track.clientHeight;
-          const thumbHeight=Math.max(25,visible/scrollHeight*trackHeight);
-          const ratio=content.scrollTop/maxScroll;
-          const maxThumbMove=trackHeight-thumbHeight;
-          thumb.style.height=thumbHeight+'px';
-          thumb.style.top=(ratio*maxThumbMove)+'px';
+    
+          thumb.style.display = 'block';
+          const trackHeight = track.clientHeight;
+          const thumbHeight = Math.max(25, visible / scrollHeight * trackHeight);
+          const ratio = content.scrollTop / maxScroll;
+          const maxThumbMove = trackHeight - thumbHeight;
+    
+          thumb.style.height = thumbHeight + 'px';
+          thumb.style.top = (ratio * maxThumbMove) + 'px';
         }
-        content.addEventListener('scroll',updateThumb);
+    
+        content.addEventListener('scroll', updateThumb);
         updateThumb();
+    
+        // 🔥 Drag da thumb
         let isDragging = false;
-        let startY;
-        let startTop;
-        
+        let startY = 0;
+        let startTop = 0;
+    
         thumb.addEventListener('mousedown', (e) => {
           isDragging = true;
           startY = e.clientY;
           startTop = parseFloat(thumb.style.top) || 0;
           document.body.style.userSelect = 'none';
         });
-        
+    
         document.addEventListener('mouseup', () => {
           isDragging = false;
           document.body.style.userSelect = '';
         });
-        
+    
         document.addEventListener('mousemove', (e) => {
           if (!isDragging) return;
-        
+    
           const deltaY = e.clientY - startY;
           const trackHeight = track.clientHeight;
           const thumbHeight = thumb.clientHeight;
           const maxTop = trackHeight - thumbHeight;
-        
+    
           let newTop = startTop + deltaY;
           newTop = Math.max(0, Math.min(newTop, maxTop));
-        
+    
           thumb.style.top = newTop + 'px';
-        
+    
           const scrollRatio = newTop / maxTop;
           content.scrollTop = scrollRatio * (content.scrollHeight - content.clientHeight);
         });
-        });
-      });
-    }
+    
+      }); 
+    } 
 
     function selectExperience(id){
       selectedId=id;
