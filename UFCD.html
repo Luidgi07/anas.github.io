@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UFCD Ana Silva</title>
+  <title>UFCD Ana </title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
     html,body{
@@ -1233,6 +1233,38 @@
         }
         content.addEventListener('scroll',updateThumb);
         updateThumb();
+        let isDragging = false;
+        let startY;
+        let startTop;
+        
+        thumb.addEventListener('mousedown', (e) => {
+          isDragging = true;
+          startY = e.clientY;
+          startTop = parseFloat(thumb.style.top) || 0;
+          document.body.style.userSelect = 'none';
+        });
+        
+        document.addEventListener('mouseup', () => {
+          isDragging = false;
+          document.body.style.userSelect = '';
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+          if (!isDragging) return;
+        
+          const deltaY = e.clientY - startY;
+          const trackHeight = track.clientHeight;
+          const thumbHeight = thumb.clientHeight;
+          const maxTop = trackHeight - thumbHeight;
+        
+          let newTop = startTop + deltaY;
+          newTop = Math.max(0, Math.min(newTop, maxTop));
+        
+          thumb.style.top = newTop + 'px';
+        
+          const scrollRatio = newTop / maxTop;
+          content.scrollTop = scrollRatio * (content.scrollHeight - content.clientHeight);
+        });
         document.querySelectorAll('.js-scroll-content').forEach(el => {
           el.style.cursor = 'grab';
           enableDragScroll(el);
