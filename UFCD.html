@@ -1089,6 +1089,35 @@
     let selectedId=1;
     const quadW=160;
     const gap=38;
+    function enableDragScroll(container) {
+      let isDown = false;
+      let startY;
+      let scrollTop;
+    
+      container.addEventListener('mousedown', (e) => {
+        isDown = true;
+        container.style.cursor = 'grabbing';
+        startY = e.pageY;
+        scrollTop = container.scrollTop;
+      });
+    
+      container.addEventListener('mouseup', () => {
+        isDown = false;
+        container.style.cursor = 'grab';
+      });
+    
+      container.addEventListener('mouseleave', () => {
+        isDown = false;
+        container.style.cursor = 'grab';
+      });
+    
+      container.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const walk = (e.pageY - startY);
+        container.scrollTop = scrollTop - walk;
+      });
+    }
 
     function renderCarousel(){
       experiencias.forEach(exp=>{
@@ -1204,6 +1233,10 @@
         }
         content.addEventListener('scroll',updateThumb);
         updateThumb();
+        document.querySelectorAll('.js-scroll-content').forEach(el => {
+          el.style.cursor = 'grab';
+          enableDragScroll(el);
+        });
       });
     }
 
