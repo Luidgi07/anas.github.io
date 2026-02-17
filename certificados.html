@@ -18,11 +18,29 @@
       color: #fff;
       text-align: center;
       padding: 1.5em 0;
+      position: relative;
     }
 
     header h1 {
       margin: 0;
       font-size: 2em;
+    }
+
+    /* Seta de voltar */
+    .back-arrow {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.8em;
+      color: #fff;
+      text-decoration: none;
+      transition: opacity 0.3s ease, transform 0.2s ease;
+    }
+
+    .back-arrow:hover {
+      opacity: 0.7;
+      transform: translateY(-50%) scale(1.1);
     }
 
     .container {
@@ -94,6 +112,7 @@
 <body>
 
 <header>
+  <a href="index.html" class="back-arrow">←</a>
   <h1>Meus Certificados</h1>
   <p>Clica em "Ver Certificado" para abrir o PDF</p>
 </header>
@@ -116,12 +135,12 @@
     {
       title: "Certificado de CONTABILIDADE",
       img: "preview/css.jpg",
-      file: "certificados/css.pdf"
+      file: "certificado_VA_contabilidade1.pdf"
     },
     {
       title: "Certificado de CONTABILIDADE",
       img: "preview/javascript.jpg",
-      file: "certificados/javascript.pdf"
+      file: "certificado_VA_contabilidade2.pdf"
     }
   ];
 
