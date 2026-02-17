@@ -1277,7 +1277,7 @@
     // O factor < 1 abranda o scroll (aqui 0.25 = 25% da velocidade normal).
     carousel.addEventListener('wheel', (event) => {
       event.preventDefault();      // impede o scroll padrão da página
-      const factor = 0.15;        // quanto menor, mais lento o scroll horizontal
+      const factor = 0.03;        // quanto menor, mais lento o scroll horizontal
       // Soma ao scrollLeft do carrossel uma fração do deltaY (valor da roda do rato)
       carousel.scrollLeft += event.deltaY * factor;
     }, { passive: false }); // passive: false para permitir o preventDefault em todos os browsers modernos[web:6]
