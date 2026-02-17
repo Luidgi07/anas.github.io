@@ -267,6 +267,13 @@
             titulo: "PRA",
             subtitulo: "Reflexão da UFCD"
           }
+        ],
+        anexos: [
+          {
+            file: "outro_documento.pdf",
+            titulo: "Anexo 1",
+            subtitulo: "Documento complementar"
+          }
         ]
       },
       {
@@ -1139,7 +1146,7 @@
             <div class="pdf-box">
               <h3>📎 PDFs relacionados</h3>
               <div class="pdf-box-inner js-scroll-content">
-                ${exp.pdfs.map(pdf=>`
+                ${(exp.pdfs || []).map(pdf=>`
                   <a class="pdf-item" href="${pdf.file}" target="_blank">
                     <div class="pdf-icon">PDF</div>
                     <div>
@@ -1149,8 +1156,23 @@
                   </a>
                 `).join('')}
               </div>
+            
+              <h3>📎 Anexos</h3>
+              <div class="pdf-box-inner js-scroll-content">
+                ${(exp.anexos || []).map(anexo=>`
+                  <a class="pdf-item" href="${anexo.file}" target="_blank">
+                    <div class="pdf-icon">PDF</div>
+                    <div>
+                      <div class="pdf-text-main">${anexo.titulo}</div>
+                      <div class="pdf-text-sub">${anexo.subtitulo}</div>
+                    </div>
+                  </a>
+                `).join('')}
+              </div>
+            
               <div class="scroll-track"><div class="scroll-thumb"></div></div>
             </div>
+
           </div>
         </div>
       `).join('');
