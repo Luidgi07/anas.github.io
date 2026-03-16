@@ -1508,7 +1508,7 @@
 
     document.getElementById('hud-start-autobiografia')?.addEventListener('click', e => {
       e.preventDefault();
-      genericHudLoading(e.currentTarget, 'autobiografia_final.pdf');
+      window.open('autobiografia_final.pdf', '_blank');
     });
 
     document.getElementById('hud-start-ufcd')?.addEventListener('click', e => {
