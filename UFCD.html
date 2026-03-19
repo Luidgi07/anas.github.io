@@ -1128,11 +1128,12 @@
       experiencias.forEach(exp=>{
         const wrapper=document.createElement('div');
         wrapper.className='carousel-item-wrapper';
-        wrapper.innerHTML=`
-          <div class="carousel-item ${exp.id===1?'selected':''}" onclick="selectExperience(${exp.id})">
+        wrapper.innerHTML = `
+          <div class="carousel-item ${exp.id === 1 ? 'selected' : ''}"
+               onmouseenter="selectExperience(${exp.id})">
             <img src="${exp.carouselImage}" alt="${exp.title}">
+            <span class="item-label">${exp.title}</span>
           </div>
-          <span class="item-label">${exp.title}</span>
         `;
         carouselTrack.appendChild(wrapper);
       });
