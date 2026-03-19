@@ -969,8 +969,6 @@
                 <span class="cd-small"></span>
                 <span>Autobiografia</span>
               </span>
-              <!-- Seta para baixo que pisca para indicar que há mais conteúdo -->
-              <span class="down-arrow">▼</span>
             </div>
           </div>
         </div>
@@ -991,7 +989,6 @@
                 <span class="cd-small"></span>
                 <span>UFCD</span>
               </span>
-              <span class="down-arrow">▼</span>
             </div>
           </div>
         </div>
@@ -1012,7 +1009,6 @@
                 <span class="cd-small"></span>
                 <span>Estágio</span>
               </span>
-              <span class="down-arrow">▼</span>
             </div>
           </div>
         </div>
@@ -1033,7 +1029,6 @@
                 <span class="cd-small"></span>
                 <span>Última Reflexão</span>
               </span>
-              <span class="down-arrow">▼</span>
             </div>
           </div>
         </div>
@@ -1057,587 +1052,254 @@
     </div>
   </div>
 
-  <!-- HUBS (detalhes em baixo; última coluna do grid fica vazia) -->
-
-  <!-- HUB 1: Desporto -->
-  <div class="game-details" id="gameDetails-1">
-    <!-- Botão para voltar ao carrossel (setas para cima) -->
-    <button class="scroll-top-btn" onclick="scrollToCarousel()">
-      <svg viewBox="0 0 48 48" fill="none">
-        <polyline points="16,28 24,20 32,28" stroke="#1da1f2" stroke-width="4" stroke-linecap="round"
-          stroke-linejoin="round" />
-        <polyline points="16,36 24,28 32,36" stroke="#1da1f2" stroke-width="4" stroke-linecap="round"
-          stroke-linejoin="round" />
-      </svg>
-    </button>
-    <div class="game-details-inner">
-      <!--  -->
-      <img class="cover-main" src="ChatGPT Image 2_08_2025, 19_35_09.png" alt="...">
-      <div class="info">
-        <h1>...</h1> <!-- ALTERAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-        <p class="tagline">Natação pura</p>
-        <p><strong>Desporto:</strong> Praticante regular de natação pura, águas abertas e salvamento aquático desportivo, atividades que promovem o desenvolvimento global da condição física, reforço muscular, resistência cardiovascular e respiratória, melhora da flexibilidade, postura e coordenação motora.</p>
-        <div class="buttons">
-          <!-- Botões de ações dentro do painel detahes (podem abrir outras páginas ou secções) -->
-          <button>Ver Troféus</button>
-          <button id="hud-desporto-start-detail">START</button>
-        </div>
-      </div>
-      <div class="side-column">
-        <!-- Cartão lateral: águas abertas -->
-        <div class="side-card">
-          <img src="icon_aa.png" alt="Águas abertas">
-          <div class="text"><strong>Águas abertas</strong><br>Provas 1.5 km a 10 km.</div>
-        </div>
-        <!-- Cartão lateral: piscina -->
-        <div class="side-card">
-          <img src="icon_np.png" alt="Piscina">
-          <div class="text"><strong>Piscina</strong><br>Velocidade & Fundo.</div>
-        </div>
-        <!-- Cartão lateral: salvamento -->
-        <div class="side-card">
-          <img src="Imagem_WhatsApp_2025-10-26_às_00.09.13_5fb53800-removebg-preview.png" alt="Salvamento">
-          <div class="text"><strong>Salvamento aquático</strong><br>Competições e provas técnicas.</div>
-        </div>
-      </div>
-      <div></div> <!-- Última coluna vazia apenas para layout -->
-    </div>
-  </div>
-
-  <!-- HUB 2: Educação -->
-  <div class="game-details" id="gameDetails-2">
-    <button class="scroll-top-btn" onclick="scrollToCarousel()">
-      <svg viewBox="0 0 48 48" fill="none">
-        <polyline points="16,28 24,20 32,28" stroke="#1da1f2" stroke-width="4" stroke-linecap="round"
-          stroke-linejoin="round" />
-        <polyline points="16,36 24,28 32,36" stroke="#1da1f2" stroke-width="4" stroke-linecap="round"
-          stroke-linejoin="round" />
-      </svg>
-    </button>
-    <div class="game-details-inner">
-      <!-- Imagem principal de capa do painel Educação -->
-      <img class="cover-main" src="ChatGPT Image 2_08_2025, 20_24_46.png" alt="Educação">
-      <div class="info">
-        <h1>EDUCAÇÃO</h1> <!-- ALTERAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-        <p class="tagline">Percurso académico em tecnologia e saúde.</p>
-        <p><strong>Educação</strong>: Percorri várias etapas académicas desafiantes, incluindo o curso de Ciências e Tecnologias no ensino secundário e a licenciatura em Tecnologia Biomédica. Estou empenhado em aprofundar continuamente os meus conhecimentos e tenciono prosseguir os meus estudos muito além da licenciatura, reforçando o meu compromisso com a aprendizagem ao longo da vida e o desenvolvimento profissional. Para ver mais informação sobre os meus estudos, carregue em START.</p>
-        <div class="buttons">
-          <button>Ver Troféus</button>
-          <button id="hud-educacao-start-detail">START</button>
-        </div>
-      </div>
-      <div class="side-column">
-        <!-- Cartão lateral: Tecnologia Biomédica -->
-        <div class="side-card">
-          <img src="TecnologiaSetubal_Principal_PolicromiaPositivo_PT-1.png" alt="Tecnologia Biomédica">
-          <div class="text"><strong>Tecnologia Biomédica</strong><br>Licenciatura.</div>
-        </div>
-        <!-- Cartão lateral: UC isoladas -->
-        <div class="side-card">
-          <img src="ISEL.png" alt="Secundário">
-          <div class="text"><strong>Unidades Curriculares Isoladas</strong><br>Engenharia Biomédica.</div>
-        </div>
-      </div>
-      <div></div>
-    </div>
-  </div>
-
-  <!-- HUB 3: Formações -->
-  <div class="game-details" id="gameDetails-3">
-    <button class="scroll-top-btn" onclick="scrollToCarousel()">
-      <svg viewBox="0 0 48 48" fill="none">
-        <polyline points="16,28 24,20 32,28" stroke="#1da1f2" stroke-width="4" stroke-linecap="round"
-          stroke-linejoin="round" />
-        <polyline points="16,36 24,28 32,36" stroke="#1da1f2" stroke-width="4" stroke-linecap="round"
-          stroke-linejoin="round" />
-      </svg>
-    </button>
-    <div class="game-details-inner">
-      <!-- Imagem principal de capa do painel Formações -->
-      <img class="cover-main" src="ChatGPT Image 2_08_2025, 21_42_43.png" alt="Formações">
-      <div class="info">
-        <h1>FORMAÇÕES</h1> <!-- ALTERAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-        <p class="tagline">Cursos complementares em tecnologia e saúde.</p>
-        <p><strong>Formações</strong>: Ao longo do meu percurso participei em várias formações e cursos complementares, contribuindo significativamente para a expansão dos meus conhecimentos práticos e teóricos. Estes cursos permitiram-me adquirir novas competências técnicas e desenvolver uma visão mais abrangente e multidisciplinar sobre temas relevantes para a minha área de interesse. Para ver mais informação sobre as minhas formações e cursos, carregue em START.</p>
-        <div class="buttons">
-          <button>Ver Troféus</button>
-          <button id="hud-formacoes-start-detail">START</button>
-        </div>
-      </div>
-      <div class="side-column">
-        <!-- Cartão lateral: carta de navegação -->
-        <div class="side-card">
-          <img src="image (4).png" alt="Carta de navegação">
-          <div class="text"><strong>Carta de navegação de recreio</strong><br>Carta de Patão Local.</div>
-        </div>
-        <!-- Cartão lateral: Surf & Rescue -->
-        <div class="side-card">
-          <img src="image (2).png" alt="Surf & Rescue">
-          <div class="text"><strong>Surf & Rescue</strong><br>Formação de salvamentos com auxílio de prancha.</div>
-        </div>
-      </div>
-      <div></div>
-    </div>
-  </div>
-
-  <!-- HUB 4: Experiências -->
-  <div class="game-details" id="gameDetails-4">
-    <button class="scroll-top-btn" onclick="scrollToCarousel()">
-      <svg viewBox="0 0 48 48" fill="none">
-        <polyline points="16,28 24,20 32,28" stroke="#1da1f2" stroke-width="4" stroke-linecap="round"
-          stroke-linejoin="round" />
-        <polyline points="16,36 24,28 32,36" stroke="#1da1f2" stroke-width="4" stroke-linecap="round"
-          stroke-linejoin="round" />
-      </svg>
-    </button>
-    <div class="game-details-inner">
-      <!-- Imagem principal de capa do painel Experiências -->
-      <img class="cover-main" src="ChatGPT Image 2_08_2025, 21_47_32.png" alt="Experiências">
-      <div class="info">
-        <h1>EXPERIÊNCIAS</h1> <!-- ALTERAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-        <p class="tagline">Estágios e projetos em contexto real.</p>
-        <p><strong>Experiências</strong>: Integrei diferentes contextos de trabalho e estágios, onde aprofundei conhecimentos técnicos e desenvolvi competências essenciais como trabalho em equipa multidisciplinar, comunicação e gestão de desafios reais. Para ver mais informação sobre as minhas experiências profissionais e estágios, carregue em START.</p>
-        <div class="buttons">
-          <button>Ver Troféus</button>
-          <button id="hud-experiencias-start-detail">START</button>
-        </div>
-      </div>
-      <div class="side-column">
-        <!-- Cartão lateral: estágios -->
-        <div class="side-card">
-          <img src="thumb_estagios.png" alt="Estágios">
-          <div class="text"><strong>Estágios</strong><br>Contextos clínicos e I&amp;D.</div>
-        </div>
-      </div>
-      <div></div>
-    </div>
-  </div>
-
-  <!-- Dica visual para o utilizador saber que pode carregar START ou seta ↓ -->
-  <div id="hubHint" class="hub-hint">
-    <span>Carrega</span>
-    <span class="key">START</span>
-    <span>ou</span>
-    <span class="key">↓</span>
-    <span>para ver mais</span>
-  </div>
-
   <!-- Elemento de fade preto usado ao mudar de página (em START) -->
   <div id="screen-fade"></div>
 
   <script>
-    // ===== FUNÇÃO PARA ATUALIZAR DATA/HORA NO HUD SUPERIOR =====
-    function updateHudTime() {
-      const el = document.getElementById('hudTimeDate'); // seleciona o span que mostra a data/hora
-      if (!el) return; // se não existir, sai da função
+  // ===== FUNÇÃO PARA ATUALIZAR DATA/HORA NO HUD SUPERIOR =====
+  function updateHudTime() {
+    const el = document.getElementById('hudTimeDate');
+    if (!el) return;
 
-      const now = new Date(); // cria um objeto com a data/hora atual
+    const now = new Date();
 
-      // Cria uma string com dia/mês e hora:minuto (formato português)
-      el.textContent =
-        now.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit' }) + ' ' +
-        now.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
-    }
+    el.textContent =
+      now.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit' }) + ' ' +
+      now.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+  }
 
-    // Atualiza o HUD a cada 1 segundo (1000 ms)
-    setInterval(updateHudTime, 1000);
-    // Chama uma vez imediatamente para não ficar em branco até ao primeiro intervalo
-    updateHudTime();
+  setInterval(updateHudTime, 1000);
+  updateHudTime();
 
-    // ===== SELEÇÃO DE ELEMENTOS PRINCIPAIS DO CARROSSEL E HUB =====
-    const carousel = document.getElementById('carousel'); // div que contém todos os cartões
-    const allItems = carousel.querySelectorAll('.menu-item'); // todos os cartões (imagens grandes)
-    const hudRows = document.querySelectorAll('.hud-row'); // todas as linhas HUD por baixo de cada cartão
-    const hudTitles = carousel.querySelectorAll('.hud-title'); // todos os títulos HUD (ao lado do START)
-    const dashboardsContainer = document.getElementById('dashCont'); // container do dashboard/carrossel
+  // ===== ELEMENTOS DO CARROSSEL =====
+  const carousel = document.getElementById('carousel');
+  const allItems = carousel.querySelectorAll('.menu-item');
+  const hudRows = document.querySelectorAll('.hud-row');
 
-    // Array com os painéis de detalhe (game-details-1...4), indexado a partir de 1
-    const gameDetailsPanels = [
-      null, // posição 0 vazia (não usada para facilitar indexação)
-      document.getElementById('gameDetails-1'),
-      document.getElementById('gameDetails-2'),
-      document.getElementById('gameDetails-3'),
-      document.getElementById('gameDetails-4')
-    ];
+  let selected = 0;
 
-    const hubHint = document.getElementById('hubHint'); // elemento da dica "Carrega START..."
+  const quadW = 160;
+  const gap = 38;
 
-    // Estado atual
-    let selected = 0;     // índice do cartão atualmente selecionado (0 = Documentação)
-    let expanded = false; // indica se o painel inferior (hub) está expandido
-    let hintShown = false; // indica se a dica já foi mostrada pelo menos uma vez
+  // ===== SCROLL COM RODA DO RATO =====
+  carousel.addEventListener('wheel', (event) => {
+    event.preventDefault();
+    const factor = 0.03;
+    carousel.scrollLeft += event.deltaY * factor;
+  }, { passive: false });
 
-    // Dimensões usadas para calcular o movimento do carrossel
-    const quadW = 160; // largura base de cada cartão
-    const gap = 38;    // espaço horizontal entre cartões
+  // ===== MOVER CARROSSEL =====
+  function moveCarousel(idx) {
+    carousel.style.transform =
+      `translateX(calc(50vw - 90px - ${(quadW + gap) * idx + quadW / 2}px))`;
+  }
 
-    // ===== NOVO: ABRANDA A VELOCIDADE DO SCROLL COM A RODA DO RATO =====
-    // Listener para a roda do rato (scroll) no carrossel.
-    // Transforma o movimento vertical da roda (deltaY) em scroll horizontal.
-    // O factor < 1 abranda o scroll (aqui 0.25 = 25% da velocidade normal).
-    carousel.addEventListener('wheel', (event) => {
-      event.preventDefault();      // impede o scroll padrão da página
-      const factor = 0.03;        // quanto menor, mais lento o scroll horizontal
-      // Soma ao scrollLeft do carrossel uma fração do deltaY (valor da roda do rato)
-      carousel.scrollLeft += event.deltaY * factor;
-    }, { passive: false }); // passive: false para permitir o preventDefault em todos os browsers modernos[web:6]
+  // ===== LIMPAR FUNDOS =====
+  function clearWallpapers() {
+    document.body.classList.remove(
+      'bg-dynamic-1', 'bg-dynamic-2', 'bg-dynamic-3', 'bg-dynamic-4',
+      'bg-dynamic', 'gradient-fade', 'hub-open'
+    );
+  }
 
-    // ===== FUNÇÃO QUE MOVE O CARROSSEL PARA CENTRAR O CARTÃO SELECIONADO =====
-    function moveCarousel(idx) {
-      // Ajusta a posição X do carrossel para que o cartão com índice idx fique centrado
-      carousel.style.transform =
-        `translateX(calc(50vw - 90px - ${(quadW + gap) * idx + quadW / 2}px))`;
-    }
+  // ===== ATUALIZAR SELEÇÃO =====
+  function updateHUD(idx) {
+    if (idx === selected) return;
 
-    // Remove todas as classes de fundo dinâmico do body
-    function clearWallpapers() {
-      document.body.classList.remove(
-        'bg-dynamic-1', 'bg-dynamic-2', 'bg-dynamic-3', 'bg-dynamic-4',
-        'bg-dynamic', 'gradient-fade', 'hub-open'
-      );
-    }
+    allItems[selected].classList.remove('selected');
+    selected = idx;
+    allItems[selected].classList.add('selected');
 
-    // Esconde a dica (hubHint)
-    function hideHint() {
-      hubHint.classList.remove('visible');
-    }
-
-    // Mostra a dica apenas uma vez (para não chatear o utilizador sempre)
-    function showHintOnce() {
-      if (hintShown) return; // se já foi mostrada antes, não faz mais nada
-      hintShown = true;      // marca como já mostrado
-      hubHint.classList.add('visible'); // torna a dica visível
-
-      // Passados 4 segundos, esconde automaticamente
-      setTimeout(hideHint, 4000);
-    }
-
-    // Atualiza o cartão HUD selecionado (visual) e o carrossel
-    function updateHUD(idx) {
-      // Se já estiver expandido ou se o índice for o mesmo que o atual, não faz nada
-      if (expanded || idx === selected) return;
-
-      // Retira a classe "selected" do cartão anterior
-      allItems[selected].classList.remove('selected');
-      // Atualiza o índice selecionado
-      selected = idx;
-      // Aplica a classe "selected" ao novo cartão
-      allItems[selected].classList.add('selected');
-
-      // Mostra apenas a hud-row correspondente ao cartão selecionado
-      hudRows.forEach((row, i) => {
-        row.style.display = (i === selected) ? 'flex' : 'none';
-      });
-
-      // Move o carrossel para centrar o cartão escolhido
-      moveCarousel(idx);
-      // Limpa os fundos
-      clearWallpapers();
-    }
-
-    // Expande o painel de detalhes (hub em baixo) para o cartão selecionado
-    function expandDetails() {
-      // Só permite expandir para os cartões 1,2,3,4 (que têm hubs configurados) e se ainda não estiver expandido
-      if (![1, 2, 3, 4].includes(selected) || expanded) return;
-
-      expanded = true; // marca que o hub está aberto
-      dashboardsContainer.classList.add('expanded'); // sobe o dashboard
-
-      // Esconde todos os painéis de detalhes
-      for (let i = 1; i <= 4; i++) {
-        if (gameDetailsPanels[i]) gameDetailsPanels[i].classList.remove('visible');
-      }
-
-      // Mostra apenas o painel correspondente ao cartão selecionado
-      if (gameDetailsPanels[selected]) gameDetailsPanels[selected].classList.add('visible');
-
-      // Marca o título da HUD do cartão selecionado (pode ser usado para um estilo especial)
-      hudTitles.forEach((t, i) => t.classList.toggle('exp-arrow', i === selected));
-
-      // Limpa fundos e ativa o fundo dinâmico correspondente
-      clearWallpapers();
-      document.body.classList.add('bg-dynamic-' + selected, 'bg-dynamic', 'gradient-fade', 'hub-open');
-
-      // Mostra a dica de START/↓ uma só vez
-      showHintOnce();
-    }
-
-    // Fecha o painel de detalhes e volta ao estado normal do carrossel
-    function collapseDetails() {
-      expanded = false; // marca que já não está aberto
-
-      dashboardsContainer.classList.remove('expanded'); // desce o dashboard
-
-      // Esconde todos os painéis de detalhes
-      for (let i = 1; i <= 4; i++) {
-        if (gameDetailsPanels[i]) gameDetailsPanels[i].classList.remove('visible');
-      }
-
-      // Remove o destaque do título do cartão
-      hudTitles.forEach(t => t.classList.remove('exp-arrow'));
-
-      // Remove fundos dinâmicos
-      clearWallpapers();
-
-      // Esconde a dica (se estiver visível)
-      hideHint();
-    }
-
-    // Adiciona click aos títulos HUD para abrir os detalhes do cartão selecionado
-    hudTitles.forEach((t, i) => {
-      t.addEventListener('click', () => {
-        // Só expande se o cartão cujo título foi clicado for o selecionado e ainda não estiver expandido
-        if (selected === i && !expanded) expandDetails();
-      });
-    });
-
-    // ===== CONTROLOS POR TECLADO =====
-    document.addEventListener('keydown', e => {
-      // Se NÃO está expandido, e um cartão (exceto o 0) está selecionado
-      // e o utilizador carrega seta ↓ ou PageDown, abre os detalhes
-      if (!expanded && selected > 0 && (e.key === 'ArrowDown' || e.key === 'PageDown')) expandDetails();
-
-      // Se está expandido, setas ↑ ou Esc fecham os detalhes
-      if (expanded && (e.key === 'Escape' || e.key === 'ArrowUp')) collapseDetails();
-
-      // Se já está expandido, ignorar as setas esquerda/direita (não mexer o carrossel)
-      if (expanded) return;
-
-      // Se seta → e ainda não está no último cartão, seleciona o próximo
-      if (e.key === 'ArrowRight' && selected < allItems.length - 1) updateHUD(selected + 1);
-
-      // Se seta ← e não está no primeiro cartão, seleciona o anterior
-      if (e.key === 'ArrowLeft' && selected > 0) updateHUD(selected - 1);
-    });
-
-    // ===== INTERAÇÕES COM OS CARTÕES (FOCUS, CLICK, HOVER) =====
-    allItems.forEach((item, idx) => {
-      // Quando o cartão ganha foco (tab teclado), atualiza HUD
-      item.addEventListener('focus', () => {
-        if (!expanded) updateHUD(idx);
-      });
-
-      // Quando se clica no cartão, também atualiza HUD
-      item.addEventListener('click', () => {
-        if (!expanded) updateHUD(idx);
-      });
-
-      // Quando o rato passa por cima de um cartão, atualiza HUD
-      item.addEventListener('mouseover', () => {
-        if (!expanded) updateHUD(idx);
-      });
-    });
-
-    // Inicializa o carrossel com o cartão 0 na posição certa
-    moveCarousel(selected);
-
-    // Mostra apenas a hud-row do cartão inicial (Documentação)
     hudRows.forEach((row, i) => {
       row.style.display = (i === selected) ? 'flex' : 'none';
     });
 
-    // ===== FUNÇÃO PARA VOLTAR AO CARROSSEL A PARTIR DO HUB =====
-    function scrollToCarousel() {
-      // Fecha os detalhes
-      collapseDetails();
+    moveCarousel(idx);
+    clearWallpapers();
+  }
 
-      // Faz o scroll suave até ao carrossel (embora ele esteja fixo, isto ajuda se estiver dentro de outra estrutura)
-      document.querySelector(".carousel-inner")
-        .scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // ===== TECLADO (APENAS ESQUERDA/DIREITA) =====
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' && selected < allItems.length - 1) {
+      updateHUD(selected + 1);
     }
 
-    // ===== LÓGICA DO LOADING E TRANSIÇÃO PARA OUTRAS PÁGINAS =====
-    const screenFade = document.getElementById('screen-fade'); // overlay preto de fade
-
-    // Função genérica que faz animação de loading e depois muda de página
-    function genericHudLoading(button, url) {
-      if (!button || button.disabled) return; // se o botão já estiver desativado, sai
-
-      button.disabled = true; // desativa o botão para não poder ser clicado outra vez
-
-      // Seleciona a div .hud-start mais próxima do botão
-      const hudStartDiv = button.closest('.hud-start');
-      hudStartDiv.classList.add('loading'); // aplica estilo de "loading"
-      hudStartDiv.innerHTML = '';          // limpa o conteúdo (remove o botão)
-
-      // Cria a barra de loading
-      const loadingBar = document.createElement('div');
-      loadingBar.classList.add('loading-bar-simple');
-      const fill = document.createElement('div');
-      fill.classList.add('fill');          // parte que vai enchendo
-      loadingBar.appendChild(fill);
-      hudStartDiv.appendChild(loadingBar);
-
-      // Variáveis para controlar a animação da barra de loading
-      let widthPercent = 0;      // percentagem de preenchimento da barra
-      let frame = 0;             // contador de "frames" (passos da animação)
-      const totalDuration = 3000; // tempo total da animação em milissegundos (3 segundos)
-      const frameCount = 60;     // número de passos (60 frames)
-      const increment = 100 / frameCount; // quanto aumenta a largura em cada passo
-      const frameDuration = totalDuration / frameCount; // tempo entre cada passo
-
-      // Intervalo que vai atualizando a barra de loading
-      const interval = setInterval(() => {
-        frame++;
-        widthPercent += increment;
-        if (widthPercent > 100) widthPercent = 100; // garante que não ultrapassa 100%
-
-        fill.style.width = widthPercent + '%'; // atualiza a largura visual da barra
-
-        if (frame >= frameCount) {
-          // Quando a animação da barra termina
-          clearInterval(interval);
-
-          setTimeout(() => {
-            // Faz o ecrã preto aparecer (fade-in)
-            screenFade.style.opacity = '1';
-            screenFade.style.pointerEvents = 'none';
-
-            // Depois de 700 ms, muda efetivamente para a nova página
-            setTimeout(() => { window.location.href = url; }, 700);
-          }, 400); // espera um pouco antes de iniciar o fade
-        }
-      }, frameDuration);
+    if (e.key === 'ArrowLeft' && selected > 0) {
+      updateHUD(selected - 1);
     }
+  });
 
-    // ===== CLICK DOS BOTÕES START DE CADA CARTÃO (NAVEGAÇÃO ENTRE PÁGINAS) =====
-    document.getElementById('hud-start-documentacao')?.addEventListener('click', e => {
-      e.preventDefault(); // previne comportamento padrão do clique
-      genericHudLoading(e.currentTarget, 'documentacao.html'); // chama loading e depois abre página
-    });
+  // ===== INTERAÇÕES =====
+  allItems.forEach((item, idx) => {
+    item.addEventListener('focus', () => updateHUD(idx));
+    item.addEventListener('click', () => updateHUD(idx));
+    item.addEventListener('mouseover', () => updateHUD(idx));
+  });
 
-    document.getElementById('hud-start-autobiografia')?.addEventListener('click', e => {
-      e.preventDefault();
-      window.open('autobiografia_final.pdf', '_blank');
-    });
+  // ===== INICIALIZAÇÃO =====
+  moveCarousel(selected);
 
-    document.getElementById('hud-start-ufcd')?.addEventListener('click', e => {
-      e.preventDefault();
-      genericHudLoading(e.currentTarget, 'UFCD.html');
-    });
+  hudRows.forEach((row, i) => {
+    row.style.display = (i === selected) ? 'flex' : 'none';
+  });
 
-    document.getElementById('hud-start-estagio')?.addEventListener('click', e => {
-      e.preventDefault();
-      genericHudLoading(e.currentTarget, 'estagio.html');
-    });
+  // ===== LOADING E TRANSIÇÃO =====
+  const screenFade = document.getElementById('screen-fade');
 
-    document.getElementById('hud-start-ultima')?.addEventListener('click', e => {
-      e.preventDefault();
-      genericHudLoading(e.currentTarget, 'ultima-reflexao.html');
-    });
+  function genericHudLoading(button, url) {
+    if (!button || button.disabled) return;
 
-    document.getElementById('hud-start-certificados')?.addEventListener('click', e => {
-      e.preventDefault();
-      genericHudLoading(e.currentTarget, 'certificados.html');
-    });
+    button.disabled = true;
 
-    // ------------ INTRO (vídeo + pop-up) com skipIntro ------------
+    const hudStartDiv = button.closest('.hud-start');
+    hudStartDiv.classList.add('loading');
+    hudStartDiv.innerHTML = '';
 
-    // Obtém os parâmetros da query string (exemplo: ?skipIntro=1)
-    const urlParams = new URLSearchParams(window.location.search);
-    // Verifica se o parâmetro skipIntro é igual a '1'
-    const skipIntro = urlParams.get('skipIntro') === '1';
+    const loadingBar = document.createElement('div');
+    loadingBar.classList.add('loading-bar-simple');
 
-    // Seleciona elementos relacionados com o vídeo e o overlay branco
-    const introVideo = document.getElementById('introVideo');
-    const introWrapper = document.getElementById('introVideoWrapper');
-    const whiteOverlayEl = document.getElementById('whiteOverlay');
+    const fill = document.createElement('div');
+    fill.classList.add('fill');
 
-    // Elementos do modal do resumo/índice
-    const infoModalOverlayEl = document.getElementById('infoModalOverlay');
-    const infoToggleBtnEl = document.getElementById('infoToggleBtn');
-    const modalCloseBtnEl = document.getElementById('modalCloseBtn');
+    loadingBar.appendChild(fill);
+    hudStartDiv.appendChild(loadingBar);
 
-    // Função para mostrar o modal do resumo/índice
-    function showModal() {
-      infoModalOverlayEl?.classList.add('visible');
-    }
+    let widthPercent = 0;
+    let frame = 0;
 
-    // Função para esconder o modal do resumo/índice,
-    // mas deixar o botão "Resumo / Índice" visível
-    function hideModal() {
-      infoModalOverlayEl?.classList.remove('visible');
-      infoToggleBtnEl?.classList.remove('hidden');
-    }
+    const totalDuration = 3000;
+    const frameCount = 60;
+    const increment = 100 / frameCount;
+    const frameDuration = totalDuration / frameCount;
 
-    // Quando se clica no botão "Fechar" do modal, esconde o modal
-    modalCloseBtnEl?.addEventListener('click', hideModal);
-    // Quando se clica no botão lateral "Resumo / Índice", mostra o modal
-    infoToggleBtnEl?.addEventListener('click', showModal);
+    const interval = setInterval(() => {
+      frame++;
+      widthPercent += increment;
 
-    // Sequência da transição do vídeo de introdução para o conteúdo
-    function startWhiteFadeSequence() {
-      if (!whiteOverlayEl || !introWrapper) return;
+      if (widthPercent > 100) widthPercent = 100;
+      fill.style.width = widthPercent + '%';
 
-      // Faz o overlay branco aparecer (flash) por cima
-      whiteOverlayEl.classList.add('visible');
-
-      // Começa a fazer o vídeo desaparecer (fade-out)
-      introWrapper.style.opacity = '0';
-      introWrapper.style.transition = 'opacity 0.6s ease';
-
-      // Depois de 0.6s, esconde completamente o wrapper do vídeo
-      setTimeout(() => {
-        introWrapper.style.display = 'none';
-      }, 600);
-
-      // Pequeno atraso antes de começar a desaparecer o branco
-      setTimeout(() => {
-        whiteOverlayEl.classList.add('fade-out');
+      if (frame >= frameCount) {
+        clearInterval(interval);
 
         setTimeout(() => {
-          // Esconde totalmente o overlay branco
-          whiteOverlayEl.style.display = 'none';
+          screenFade.style.opacity = '1';
+          screenFade.style.pointerEvents = 'none';
 
-          // Abre o pop-up de resumo/índice pela primeira vez
-          showModal();
-          // Enquanto o pop-up está aberto, o botão fica escondido
-          infoToggleBtnEl?.classList.add('hidden');
-        }, 1900); // tempo extra para o fade-out completo
-      }, 200);
-    }
+          setTimeout(() => {
+            window.location.href = url;
+          }, 700);
+        }, 400);
+      }
+    }, frameDuration);
+  }
 
-    // Se a página for aberta com ?skipIntro=1,
-    // não mostra vídeo nem pop-up automático
-    if (skipIntro) {
-      if (introWrapper) introWrapper.style.display = 'none';
-      if (whiteOverlayEl) whiteOverlayEl.style.display = 'none';
-      // Mostra apenas o botão "Resumo / Índice" para abrir o modal manualmente
-      infoToggleBtnEl?.classList.remove('hidden');
-    } else {
-      // Fluxo normal: o vídeo corre até ao fim e depois executa a sequência de fade
-      introVideo?.addEventListener('ended', startWhiteFadeSequence);
+  // ===== BOTÕES START =====
+  document.getElementById('hud-start-documentacao')?.addEventListener('click', e => {
+    e.preventDefault();
+    genericHudLoading(e.currentTarget, 'documentacao.html');
+  });
 
-      // Se por algum motivo o vídeo demorar demais (15s),
-      // força a sequência de fade para avançar
+  document.getElementById('hud-start-autobiografia')?.addEventListener('click', e => {
+    e.preventDefault();
+    window.open('autobiografia_final.pdf', '_blank');
+  });
+
+  document.getElementById('hud-start-ufcd')?.addEventListener('click', e => {
+    e.preventDefault();
+    genericHudLoading(e.currentTarget, 'UFCD.html');
+  });
+
+  document.getElementById('hud-start-estagio')?.addEventListener('click', e => {
+    e.preventDefault();
+    genericHudLoading(e.currentTarget, 'estagio.html');
+  });
+
+  document.getElementById('hud-start-ultima')?.addEventListener('click', e => {
+    e.preventDefault();
+    genericHudLoading(e.currentTarget, 'ultima-reflexao.html');
+  });
+
+  document.getElementById('hud-start-certificados')?.addEventListener('click', e => {
+    e.preventDefault();
+    genericHudLoading(e.currentTarget, 'certificados.html');
+  });
+
+  // ===== INTRO / MODAL =====
+  const urlParams = new URLSearchParams(window.location.search);
+  const skipIntro = urlParams.get('skipIntro') === '1';
+
+  const introVideo = document.getElementById('introVideo');
+  const introWrapper = document.getElementById('introVideoWrapper');
+  const whiteOverlayEl = document.getElementById('whiteOverlay');
+
+  const infoModalOverlayEl = document.getElementById('infoModalOverlay');
+  const infoToggleBtnEl = document.getElementById('infoToggleBtn');
+  const modalCloseBtnEl = document.getElementById('modalCloseBtn');
+
+  function showModal() {
+    infoModalOverlayEl?.classList.add('visible');
+  }
+
+  function hideModal() {
+    infoModalOverlayEl?.classList.remove('visible');
+    infoToggleBtnEl?.classList.remove('hidden');
+  }
+
+  modalCloseBtnEl?.addEventListener('click', hideModal);
+  infoToggleBtnEl?.addEventListener('click', showModal);
+
+  function startWhiteFadeSequence() {
+    if (!whiteOverlayEl || !introWrapper) return;
+
+    whiteOverlayEl.classList.add('visible');
+    introWrapper.style.opacity = '0';
+
+    setTimeout(() => {
+      introWrapper.style.display = 'none';
+    }, 600);
+
+    setTimeout(() => {
+      whiteOverlayEl.classList.add('fade-out');
+
       setTimeout(() => {
-        if (introWrapper && introWrapper.style.display !== 'none') {
-          startWhiteFadeSequence();
-        }
-      }, 15000);
-    }
+        whiteOverlayEl.style.display = 'none';
+        showModal();
+        infoToggleBtnEl?.classList.add('hidden');
+      }, 1900);
+    }, 200);
+  }
 
-    // ===== MODAL BIBLIOGRAFIA (ABRIR/FECHAR) =====
-    const biblioModalOverlayEl = document.getElementById('biblioModalOverlay');
-    const biblioToggleBtnEl = document.getElementById('biblioToggleBtn');
-    const biblioCloseBtnEl = document.getElementById('biblioCloseBtn');
+  if (skipIntro) {
+    if (introWrapper) introWrapper.style.display = 'none';
+    if (whiteOverlayEl) whiteOverlayEl.style.display = 'none';
+    infoToggleBtnEl?.classList.remove('hidden');
+  } else {
+    introVideo?.addEventListener('ended', startWhiteFadeSequence);
 
-    // Mostra o modal de bibliografia
-    function showBiblioModal() {
-      biblioModalOverlayEl.classList.add('visible');
-    }
+    setTimeout(() => {
+      if (introWrapper && introWrapper.style.display !== 'none') {
+        startWhiteFadeSequence();
+      }
+    }, 15000);
+  }
 
-    // Esconde o modal de bibliografia
-    function hideBiblioModal() {
-      biblioModalOverlayEl.classList.remove('visible');
-    }
+  // ===== MODAL BIBLIOGRAFIA =====
+  const biblioModalOverlayEl = document.getElementById('biblioModalOverlay');
+  const biblioToggleBtnEl = document.getElementById('biblioToggleBtn');
+  const biblioCloseBtnEl = document.getElementById('biblioCloseBtn');
 
-    // Ao clicar no botão lateral de Bibliografia, abre o modal
-    biblioToggleBtnEl.addEventListener('click', showBiblioModal);
+  function showBiblioModal() {
+    biblioModalOverlayEl.classList.add('visible');
+  }
 
-    // Ao clicar no botão "Fechar" dentro do modal, fecha-o
-    biblioCloseBtnEl.addEventListener('click', hideBiblioModal);
-  </script>
+  function hideBiblioModal() {
+    biblioModalOverlayEl.classList.remove('visible');
+  }
+
+  biblioToggleBtnEl.addEventListener('click', showBiblioModal);
+  biblioCloseBtnEl.addEventListener('click', hideBiblioModal);
+</script>
 </body>
 
 </html>
